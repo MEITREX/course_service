@@ -39,5 +39,5 @@ The API is available at `/graphql` and the GraphiQL interface is available at `/
 
 ## Get started
 A guide how to start development can be
-found in the [wiki](https://gits-enpro.readthedocs.io/en/latest/dev-manuals/backend/get-started.html).
+found in the [wiki](https://meitrex.readthedocs.io/en/latest/dev-manuals/backend/get-started.html).
 
