@@ -1,7 +1,7 @@
 package de.unistuttgart.iste.gits.course_service.persistence.validation;
 
-import de.unistuttgart.iste.gits.generated.dto.CreateChapterInput;
-import de.unistuttgart.iste.gits.generated.dto.UpdateChapterInput;
+import de.unistuttgart.iste.meitrex.generated.dto.CreateChapterInput;
+import de.unistuttgart.iste.meitrex.generated.dto.UpdateChapterInput;
 import jakarta.validation.ValidationException;
 import org.springframework.stereotype.Component;
 

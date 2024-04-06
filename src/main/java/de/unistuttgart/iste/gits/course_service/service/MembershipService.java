@@ -5,7 +5,7 @@ import de.unistuttgart.iste.gits.course_service.persistence.mapper.CourseMapper;
 import de.unistuttgart.iste.gits.course_service.persistence.mapper.MembershipMapper;
 import de.unistuttgart.iste.gits.course_service.persistence.repository.CourseMembershipRepository;
 import de.unistuttgart.iste.gits.course_service.persistence.repository.CourseRepository;
-import de.unistuttgart.iste.gits.generated.dto.*;
+import de.unistuttgart.iste.meitrex.generated.dto.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

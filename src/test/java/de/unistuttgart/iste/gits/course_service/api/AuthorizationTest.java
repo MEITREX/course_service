@@ -1,11 +1,11 @@
 package de.unistuttgart.iste.gits.course_service.integration;
 
-import de.unistuttgart.iste.gits.common.testutil.*;
-import de.unistuttgart.iste.gits.common.user_handling.LoggedInUser;
 import de.unistuttgart.iste.gits.course_service.persistence.entity.ChapterEntity;
 import de.unistuttgart.iste.gits.course_service.persistence.repository.ChapterRepository;
-import de.unistuttgart.iste.gits.generated.dto.CourseMembership;
-import de.unistuttgart.iste.gits.generated.dto.UserRoleInCourse;
+import de.unistuttgart.iste.meitrex.common.testutil.*;
+import de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser;
+import de.unistuttgart.iste.meitrex.generated.dto.CourseMembership;
+import de.unistuttgart.iste.meitrex.generated.dto.UserRoleInCourse;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -16,13 +16,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-import static de.unistuttgart.iste.gits.common.testutil.TestUsers.userWithMembershipInCourseWithId;
-import static de.unistuttgart.iste.gits.common.user_handling.LoggedInUser.UserRoleInCourse.STUDENT;
 import static de.unistuttgart.iste.gits.course_service.test_utils.TestUtils.dummyChapterBuilder;
+import static de.unistuttgart.iste.meitrex.common.testutil.TestUsers.userWithMembershipInCourseWithId;
+import static de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser.UserRoleInCourse.STUDENT;
 
 
 @ContextConfiguration(classes = MockTestPublisherConfiguration.class)

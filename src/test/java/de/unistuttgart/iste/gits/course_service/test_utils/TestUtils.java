@@ -1,11 +1,9 @@
 package de.unistuttgart.iste.gits.course_service.test_utils;
 
-import de.unistuttgart.iste.gits.common.user_handling.LoggedInUser;
-import de.unistuttgart.iste.gits.course_service.persistence.entity.ChapterEntity;
-import de.unistuttgart.iste.gits.course_service.persistence.entity.CourseEntity;
-import de.unistuttgart.iste.gits.course_service.persistence.entity.CourseMembershipEntity;
+import de.unistuttgart.iste.gits.course_service.persistence.entity.*;
 import de.unistuttgart.iste.gits.course_service.persistence.repository.CourseMembershipRepository;
-import de.unistuttgart.iste.gits.generated.dto.UserRoleInCourse;
+import de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser;
+import de.unistuttgart.iste.meitrex.generated.dto.UserRoleInCourse;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;

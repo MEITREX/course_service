@@ -1,19 +1,14 @@
 package de.unistuttgart.iste.gits.course_service.controller;
 
-import de.unistuttgart.iste.gits.common.user_handling.GlobalPermissionAccessValidator;
-import de.unistuttgart.iste.gits.common.user_handling.LoggedInUser;
-import de.unistuttgart.iste.gits.common.user_handling.UserCourseAccessValidator;
 import de.unistuttgart.iste.gits.course_service.service.CourseService;
-import de.unistuttgart.iste.gits.generated.dto.*;
+import de.unistuttgart.iste.meitrex.common.user_handling.*;
+import de.unistuttgart.iste.meitrex.generated.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.*;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Controller

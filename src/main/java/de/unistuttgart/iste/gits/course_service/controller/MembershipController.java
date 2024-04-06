@@ -1,8 +1,8 @@
 package de.unistuttgart.iste.gits.course_service.controller;
 
-import de.unistuttgart.iste.gits.common.user_handling.LoggedInUser;
 import de.unistuttgart.iste.gits.course_service.service.MembershipService;
-import de.unistuttgart.iste.gits.generated.dto.*;
+import de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser;
+import de.unistuttgart.iste.meitrex.generated.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.*;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 import java.util.UUID;
 
-import static de.unistuttgart.iste.gits.common.user_handling.LoggedInUser.UserRoleInCourse.ADMINISTRATOR;
-import static de.unistuttgart.iste.gits.common.user_handling.UserCourseAccessValidator.validateUserHasAccessToCourse;
+import static de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser.UserRoleInCourse.ADMINISTRATOR;
+import static de.unistuttgart.iste.meitrex.common.user_handling.UserCourseAccessValidator.validateUserHasAccessToCourse;
 
 @Slf4j
 @Controller

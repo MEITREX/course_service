@@ -1,14 +1,8 @@
 package de.unistuttgart.iste.gits.course_service.persistence.entity;
 
-import de.unistuttgart.iste.gits.generated.dto.UserRoleInCourse;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import de.unistuttgart.iste.meitrex.generated.dto.UserRoleInCourse;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.UUID;
 

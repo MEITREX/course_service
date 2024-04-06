@@ -1,13 +1,11 @@
 package de.unistuttgart.iste.gits.course_service.api;
 
-import de.unistuttgart.iste.gits.common.testutil.*;
-import de.unistuttgart.iste.gits.common.user_handling.LoggedInUser;
-import de.unistuttgart.iste.gits.common.user_handling.LoggedInUser.CourseMembership;
-import de.unistuttgart.iste.gits.common.user_handling.LoggedInUser.UserRoleInCourse;
-import de.unistuttgart.iste.gits.course_service.persistence.entity.ChapterEntity;
-import de.unistuttgart.iste.gits.course_service.persistence.entity.CourseEntity;
 import de.unistuttgart.iste.gits.course_service.persistence.repository.ChapterRepository;
 import de.unistuttgart.iste.gits.course_service.persistence.repository.CourseRepository;
+import de.unistuttgart.iste.meitrex.common.testutil.*;
+import de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser;
+import de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser.CourseMembership;
+import de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser.UserRoleInCourse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.test.tester.HttpGraphQlTester;

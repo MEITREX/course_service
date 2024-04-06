@@ -1,7 +1,7 @@
 package de.unistuttgart.iste.gits.course_service.persistence.validation;
 
-import de.unistuttgart.iste.gits.generated.dto.CreateCourseInput;
-import de.unistuttgart.iste.gits.generated.dto.UpdateCourseInput;
+import de.unistuttgart.iste.meitrex.generated.dto.CreateCourseInput;
+import de.unistuttgart.iste.meitrex.generated.dto.UpdateCourseInput;
 import jakarta.validation.ValidationException;
 import org.springframework.stereotype.Component;
 

@@ -1,10 +1,10 @@
 package de.unistuttgart.iste.gits.course_service.api;
 
-import de.unistuttgart.iste.gits.common.testutil.*;
-import de.unistuttgart.iste.gits.common.user_handling.LoggedInUser;
 import de.unistuttgart.iste.gits.course_service.persistence.repository.ChapterRepository;
 import de.unistuttgart.iste.gits.course_service.persistence.repository.CourseRepository;
-import de.unistuttgart.iste.gits.generated.dto.YearDivision;
+import de.unistuttgart.iste.meitrex.common.testutil.*;
+import de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser;
+import de.unistuttgart.iste.meitrex.generated.dto.YearDivision;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.test.tester.GraphQlTester;
@@ -15,8 +15,8 @@ import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.UUID;
 
-import static de.unistuttgart.iste.gits.common.testutil.TestUsers.userWithMembershipsAndRealmRoles;
-import static de.unistuttgart.iste.gits.common.user_handling.LoggedInUser.RealmRole.COURSE_CREATOR;
+import static de.unistuttgart.iste.meitrex.common.testutil.TestUsers.userWithMembershipsAndRealmRoles;
+import static de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser.RealmRole.COURSE_CREATOR;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 

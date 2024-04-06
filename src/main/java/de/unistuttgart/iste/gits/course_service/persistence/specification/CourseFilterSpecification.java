@@ -1,11 +1,11 @@
 package de.unistuttgart.iste.gits.course_service.persistence.specification;
 
 import de.unistuttgart.iste.gits.course_service.persistence.entity.CourseEntity;
-import de.unistuttgart.iste.gits.generated.dto.CourseFilter;
+import de.unistuttgart.iste.meitrex.generated.dto.CourseFilter;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.Nullable;
 
-import static de.unistuttgart.iste.gits.common.util.SpecificationUtil.*;
+import static de.unistuttgart.iste.meitrex.common.util.SpecificationUtil.*;
 
 
 public class CourseFilterSpecification {

@@ -1,6 +1,6 @@
 package de.unistuttgart.iste.gits.course_service.persistence.entity;
 
-import de.unistuttgart.iste.gits.common.persistence.IWithId;
+import de.unistuttgart.iste.meitrex.common.persistence.IWithId;
 import jakarta.persistence.*;
 import lombok.*;
 

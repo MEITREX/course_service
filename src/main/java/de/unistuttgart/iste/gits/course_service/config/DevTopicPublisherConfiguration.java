@@ -1,11 +1,9 @@
 package de.unistuttgart.iste.gits.course_service.config;
 
-import de.unistuttgart.iste.gits.common.dapr.MockTopicPublisher;
-import de.unistuttgart.iste.gits.common.dapr.TopicPublisher;
+import de.unistuttgart.iste.meitrex.common.dapr.MockTopicPublisher;
+import de.unistuttgart.iste.meitrex.common.dapr.TopicPublisher;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.*;
 
 /**
  * This is a dev-config for the TopicPublisher. It is intended to be used for development only.

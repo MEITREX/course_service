@@ -1,4 +1,3 @@
-
 package de.unistuttgart.iste.gits.course_service.config;
 
 import graphql.scalars.ExtendedScalars;

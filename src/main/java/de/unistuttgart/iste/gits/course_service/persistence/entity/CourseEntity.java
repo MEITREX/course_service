@@ -1,12 +1,13 @@
 package de.unistuttgart.iste.gits.course_service.persistence.entity;
 
-import de.unistuttgart.iste.gits.common.persistence.IWithId;
-import de.unistuttgart.iste.gits.generated.dto.YearDivision;
+import de.unistuttgart.iste.meitrex.common.persistence.IWithId;
+import de.unistuttgart.iste.meitrex.generated.dto.YearDivision;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.OffsetDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 @Entity(name = "Course")
 @Data
