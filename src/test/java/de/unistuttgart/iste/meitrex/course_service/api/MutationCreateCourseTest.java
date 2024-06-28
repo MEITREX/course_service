@@ -1,6 +1,8 @@
 package de.unistuttgart.iste.meitrex.course_service.api;
 
-import de.unistuttgart.iste.meitrex.common.testutil.*;
+import de.unistuttgart.iste.meitrex.common.testutil.GraphQlApiTest;
+import de.unistuttgart.iste.meitrex.common.testutil.InjectCurrentUserHeader;
+import de.unistuttgart.iste.meitrex.common.testutil.MockTestPublisherConfiguration;
 import de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser;
 import de.unistuttgart.iste.meitrex.course_service.persistence.repository.ChapterRepository;
 import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseRepository;
@@ -9,6 +11,7 @@ import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.test.tester.GraphQlTester;
+import org.springframework.graphql.test.tester.WebGraphQlTester;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.time.OffsetDateTime;
@@ -42,7 +45,7 @@ class MutationCreateCourseTest {
      * Then the course is created and returned
      */
     @Test
-    void testCreateCourse(final HttpGraphQlTester tester) {
+    void testCreateCourse(WebGraphQlTester tester) {
         final String query = """
                 mutation {
                     createCourse(
@@ -99,7 +102,7 @@ class MutationCreateCourseTest {
      * Then the course is created and returned
      */
     @Test
-    void testCreateCourseWithTerm(final HttpGraphQlTester tester) {
+    void testCreateCourseWithTerm(GraphQlTester tester) {
         final String query = """
                 mutation {
                     createCourse(
@@ -253,7 +256,7 @@ class MutationCreateCourseTest {
      * Then a validation error is returned
      */
     @Test
-    void testStartDateAfterEndDate(final HttpGraphQlTester tester) {
+    void testStartDateAfterEndDate(WebGraphQlTester tester) {
         final String query = """
                 mutation {
                     createCourse(

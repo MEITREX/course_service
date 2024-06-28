@@ -39,7 +39,7 @@ public class AuthorizationTest {
 
 
     @Test
-    void testCreateCourseCourseCreatorOnly(final HttpGraphQlTester tester) {
+    void testCreateCourseCourseCreatorOnly(WebGraphQlTester tester) {
 
         final String query = """
                 mutation {
@@ -80,7 +80,7 @@ public class AuthorizationTest {
 
     @Test
     @Transactional
-    void testUpdateCourseAdminOnly(final HttpGraphQlTester tester) {
+    void testUpdateCourseAdminOnly(WebGraphQlTester tester) {
 
         final String query = """
                 mutation {
@@ -120,7 +120,7 @@ public class AuthorizationTest {
     }
 
     @Test
-    void testDeleteCourseAdminOnly(final HttpGraphQlTester tester) {
+    void testDeleteCourseAdminOnly(WebGraphQlTester tester) {
 
         final String query = """
                 mutation {
@@ -135,7 +135,7 @@ public class AuthorizationTest {
     }
 
     @Test
-    void testCreateChapterAdminOnly(final HttpGraphQlTester tester) {
+    void testCreateChapterAdminOnly(WebGraphQlTester tester) {
 
         final String query = """
                 mutation {
@@ -165,7 +165,7 @@ public class AuthorizationTest {
     }
 
     @Test
-    void testUpdateChapterAdminOnly(final HttpGraphQlTester tester) {
+    void testUpdateChapterAdminOnly(WebGraphQlTester tester) {
 
         final ChapterEntity chapterEntity = chapterRepository.save(TestUtils.dummyChapterBuilder().courseId(courseId).build());
 
@@ -226,7 +226,7 @@ public class AuthorizationTest {
 
 
     @Test
-    void testCreateMembershipAdminOnly(final HttpGraphQlTester tester) {
+    void testCreateMembershipAdminOnly(WebGraphQlTester tester) {
 
         final CourseMembership expectedDto = CourseMembership.builder()
                 .setUserId(UUID.randomUUID())
@@ -257,7 +257,7 @@ public class AuthorizationTest {
     }
 
     @Test
-    void testUpdateMembershipAdminOnly(final HttpGraphQlTester tester) {
+    void testUpdateMembershipAdminOnly(WebGraphQlTester tester) {
 
         final CourseMembership expectedDto = CourseMembership.builder()
                 .setUserId(currentUser.getId())
@@ -288,7 +288,7 @@ public class AuthorizationTest {
     }
 
     @Test
-    void testDeleteMembershipAdminOnly(final HttpGraphQlTester tester) {
+    void testDeleteMembershipAdminOnly(WebGraphQlTester tester) {
 
         final CourseMembership expectedDto = CourseMembership.builder()
                 .setUserId(currentUser.getId())
