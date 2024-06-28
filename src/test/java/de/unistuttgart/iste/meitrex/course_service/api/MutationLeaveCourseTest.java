@@ -2,7 +2,9 @@ package de.unistuttgart.iste.meitrex.course_service.api;
 
 import de.unistuttgart.iste.meitrex.common.testutil.GraphQlApiTest;
 import de.unistuttgart.iste.meitrex.common.testutil.InjectCurrentUserHeader;
-import de.unistuttgart.iste.meitrex.course_service.persistence.entity.*;
+import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseEntity;
+import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseMembershipEntity;
+import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseMembershipPk;
 import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseMembershipRepository;
 import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseRepository;
 import de.unistuttgart.iste.meitrex.generated.dto.CourseMembership;
@@ -10,7 +12,7 @@ import de.unistuttgart.iste.meitrex.generated.dto.UserRoleInCourse;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.graphql.test.tester.HttpGraphQlTester;
+import org.springframework.graphql.test.tester.WebGraphQlTester;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -27,7 +29,7 @@ class MutationLeaveCourseTest {
     private final UUID currentUserId = UUID.randomUUID();
 
     @Test
-    void testLeaveCourse(final HttpGraphQlTester tester) {
+    void testLeaveCourse(WebGraphQlTester tester) {
         final CourseEntity course = courseRepository.save(CourseEntity.builder().title("Course 1")
                 .description("This is course 1")
                 .startDate(OffsetDateTime.parse("2020-01-01T00:00:00.000Z"))

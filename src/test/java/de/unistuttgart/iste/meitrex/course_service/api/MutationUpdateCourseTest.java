@@ -5,14 +5,16 @@ import de.unistuttgart.iste.meitrex.common.testutil.MockTestPublisherConfigurati
 import de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.ChapterEntity;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseEntity;
-import de.unistuttgart.iste.meitrex.course_service.persistence.repository.*;
+import de.unistuttgart.iste.meitrex.course_service.persistence.repository.ChapterRepository;
+import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseMembershipRepository;
+import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseRepository;
 import de.unistuttgart.iste.meitrex.course_service.test_utils.TestUtils;
 import de.unistuttgart.iste.meitrex.generated.dto.Chapter;
 import de.unistuttgart.iste.meitrex.generated.dto.YearDivision;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.test.tester.GraphQlTester;
-import org.springframework.graphql.test.tester.HttpGraphQlTester;
+import org.springframework.graphql.test.tester.WebGraphQlTester;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +49,7 @@ class MutationUpdateCourseTest {
      */
     @Test
     @Transactional
-    void testUpdateCourseSuccessful(HttpGraphQlTester tester) {
+    void testUpdateCourseSuccessful(WebGraphQlTester tester) {
         // create a course with a chapter in the database
         final CourseEntity initialCourse = courseRepository.save(CourseEntity.builder().title("Course 1")
                 .description("This is course 1")
@@ -138,7 +140,7 @@ class MutationUpdateCourseTest {
      * Then an error is returned
      */
     @Test
-    void testUpdateCourseNotExisting(HttpGraphQlTester tester) {
+    void testUpdateCourseNotExisting(WebGraphQlTester tester) {
         final UUID courseId = UUID.randomUUID();
 
         // create admin user object
@@ -272,7 +274,7 @@ class MutationUpdateCourseTest {
      * Then a validation error is returned
      */
     @Test
-    void testStartDateAfterEndDate(HttpGraphQlTester tester) {
+    void testStartDateAfterEndDate(WebGraphQlTester tester) {
         final UUID courseId = UUID.randomUUID();
 
         // create admin user object

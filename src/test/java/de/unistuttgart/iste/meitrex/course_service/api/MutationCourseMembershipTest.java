@@ -11,7 +11,7 @@ import de.unistuttgart.iste.meitrex.generated.dto.CourseMembership;
 import de.unistuttgart.iste.meitrex.generated.dto.UserRoleInCourse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.graphql.test.tester.HttpGraphQlTester;
+import org.springframework.graphql.test.tester.WebGraphQlTester;
 
 import java.util.UUID;
 
@@ -28,7 +28,7 @@ class MutationCourseMembershipTest {
     private CourseRepository courseRepository;
 
     @Test
-    void createMembershipTest(HttpGraphQlTester tester) {
+    void createMembershipTest(WebGraphQlTester tester) {
         // create course
         final CourseEntity course = courseRepository.save(TestUtils.dummyCourseBuilder().build());
 
@@ -71,7 +71,7 @@ class MutationCourseMembershipTest {
     }
 
     @Test
-    void updateMembershipMembershipNotExistingTest(HttpGraphQlTester tester) {
+    void updateMembershipMembershipNotExistingTest(WebGraphQlTester tester) {
         final UUID courseId = UUID.randomUUID();
 
         // create admin user object
@@ -118,7 +118,7 @@ class MutationCourseMembershipTest {
     }
 
     @Test
-    void updateMembershipTest(HttpGraphQlTester tester) {
+    void updateMembershipTest(WebGraphQlTester tester) {
         final UUID courseId = UUID.randomUUID();
 
         // create admin user object
@@ -171,7 +171,7 @@ class MutationCourseMembershipTest {
     }
 
     @Test
-    void deleteNotExistingMembershipTest(HttpGraphQlTester tester) {
+    void deleteNotExistingMembershipTest(WebGraphQlTester tester) {
         final UUID courseId = UUID.randomUUID();
 
         // create admin user object
@@ -220,7 +220,7 @@ class MutationCourseMembershipTest {
     }
 
     @Test
-    void deleteMembershipTest(HttpGraphQlTester tester) {
+    void deleteMembershipTest(WebGraphQlTester tester) {
         final UUID courseId = UUID.randomUUID();
 
         // create admin user object

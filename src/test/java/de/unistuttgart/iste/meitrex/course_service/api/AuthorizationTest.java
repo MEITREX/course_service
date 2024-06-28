@@ -12,12 +12,14 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.ResponseError;
-import org.springframework.graphql.test.tester.HttpGraphQlTester;
+import org.springframework.graphql.test.tester.WebGraphQlTester;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 import static de.unistuttgart.iste.meitrex.common.testutil.TestUsers.userWithMembershipInCourseWithId;
 import static de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser.UserRoleInCourse.STUDENT;
@@ -37,7 +39,7 @@ public class AuthorizationTest {
 
 
     @Test
-    void testCreateCourseCourseCreatorOnly(final HttpGraphQlTester tester) {
+    void testCreateCourseCourseCreatorOnly(WebGraphQlTester tester) {
 
         final String query = """
                 mutation {
@@ -78,7 +80,7 @@ public class AuthorizationTest {
 
     @Test
     @Transactional
-    void testUpdateCourseAdminOnly(final HttpGraphQlTester tester) {
+    void testUpdateCourseAdminOnly(WebGraphQlTester tester) {
 
         final String query = """
                 mutation {
@@ -118,7 +120,7 @@ public class AuthorizationTest {
     }
 
     @Test
-    void testDeleteCourseAdminOnly(final HttpGraphQlTester tester) {
+    void testDeleteCourseAdminOnly(WebGraphQlTester tester) {
 
         final String query = """
                 mutation {
@@ -133,7 +135,7 @@ public class AuthorizationTest {
     }
 
     @Test
-    void testCreateChapterAdminOnly(final HttpGraphQlTester tester) {
+    void testCreateChapterAdminOnly(WebGraphQlTester tester) {
 
         final String query = """
                 mutation {
@@ -163,7 +165,7 @@ public class AuthorizationTest {
     }
 
     @Test
-    void testUpdateChapterAdminOnly(final HttpGraphQlTester tester) {
+    void testUpdateChapterAdminOnly(WebGraphQlTester tester) {
 
         final ChapterEntity chapterEntity = chapterRepository.save(TestUtils.dummyChapterBuilder().courseId(courseId).build());
 
@@ -196,7 +198,7 @@ public class AuthorizationTest {
     }
 
     @Test
-    void testDeleteChapterAdminOnly(HttpGraphQlTester tester) {
+    void testDeleteChapterAdminOnly(WebGraphQlTester tester) {
         final ChapterEntity chapterEntity = chapterRepository.save(TestUtils.dummyChapterBuilder().courseId(courseId).build());
 
         final String query = """
@@ -224,7 +226,7 @@ public class AuthorizationTest {
 
 
     @Test
-    void testCreateMembershipAdminOnly(final HttpGraphQlTester tester) {
+    void testCreateMembershipAdminOnly(WebGraphQlTester tester) {
 
         final CourseMembership expectedDto = CourseMembership.builder()
                 .setUserId(UUID.randomUUID())
@@ -255,7 +257,7 @@ public class AuthorizationTest {
     }
 
     @Test
-    void testUpdateMembershipAdminOnly(final HttpGraphQlTester tester) {
+    void testUpdateMembershipAdminOnly(WebGraphQlTester tester) {
 
         final CourseMembership expectedDto = CourseMembership.builder()
                 .setUserId(currentUser.getId())
@@ -286,7 +288,7 @@ public class AuthorizationTest {
     }
 
     @Test
-    void testDeleteMembershipAdminOnly(final HttpGraphQlTester tester) {
+    void testDeleteMembershipAdminOnly(WebGraphQlTester tester) {
 
         final CourseMembership expectedDto = CourseMembership.builder()
                 .setUserId(currentUser.getId())
