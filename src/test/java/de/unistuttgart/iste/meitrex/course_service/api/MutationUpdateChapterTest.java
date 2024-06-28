@@ -5,17 +5,21 @@ import de.unistuttgart.iste.meitrex.common.testutil.MockTestPublisherConfigurati
 import de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.ChapterEntity;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseEntity;
-import de.unistuttgart.iste.meitrex.course_service.persistence.repository.*;
+import de.unistuttgart.iste.meitrex.course_service.persistence.repository.ChapterRepository;
+import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseMembershipRepository;
+import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseRepository;
 import de.unistuttgart.iste.meitrex.course_service.test_utils.TestUtils;
 import de.unistuttgart.iste.meitrex.generated.dto.Chapter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.test.tester.GraphQlTester;
-import org.springframework.graphql.test.tester.HttpGraphQlTester;
+import org.springframework.graphql.test.tester.WebGraphQlTester;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.time.OffsetDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.UUID;
 
 import static de.unistuttgart.iste.meitrex.common.testutil.HeaderUtils.addCurrentUserHeader;
 import static de.unistuttgart.iste.meitrex.common.testutil.TestUsers.userWithMembershipInCourseWithId;
@@ -39,7 +43,7 @@ class MutationUpdateChapterTest {
      * Then the chapter is updated and returned
      */
     @Test
-    void testUpdateChapter(HttpGraphQlTester tester) {
+    void testUpdateChapter(WebGraphQlTester tester) {
         final CourseEntity course = courseRepository.save(CourseEntity.builder()
                 .title("New Course")
                 .description("This is a new course")
@@ -114,7 +118,7 @@ class MutationUpdateChapterTest {
      * Then an error is returned
      */
     @Test
-    void testUpdateChapterNotExisting(HttpGraphQlTester tester) {
+    void testUpdateChapterNotExisting(WebGraphQlTester tester) {
         // create admin user object
         final LoggedInUser adminUser = new LoggedInUser(UUID.randomUUID(),
                 "admin",
@@ -257,7 +261,7 @@ class MutationUpdateChapterTest {
      * Then a validation error is returned
      */
     @Test
-    void testStartDateAfterEndDate(HttpGraphQlTester tester) {
+    void testStartDateAfterEndDate(WebGraphQlTester tester) {
         // create and save chapter
         final ChapterEntity chapter = chapterRepository.save(TestUtils.dummyChapterBuilder().build());
 

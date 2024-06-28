@@ -9,11 +9,13 @@ import de.unistuttgart.iste.meitrex.course_service.persistence.repository.Course
 import de.unistuttgart.iste.meitrex.course_service.test_utils.TestUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.graphql.test.tester.HttpGraphQlTester;
+import org.springframework.graphql.test.tester.WebGraphQlTester;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.time.OffsetDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -39,7 +41,7 @@ class MutationDeleteChapterTest {
      * Then the chapter is deleted and the uuid is returned
      */
     @Test
-    void testDeletion(HttpGraphQlTester tester) {
+    void testDeletion(WebGraphQlTester tester) {
         // create a course in the database
         final var course = courseRepository.save(TestUtils.dummyCourseBuilder().build());
         // create two chapters in the database
@@ -81,7 +83,7 @@ class MutationDeleteChapterTest {
      * Then an error is returned
      */
     @Test
-    void testDeletionInvalidId(HttpGraphQlTester tester) {
+    void testDeletionInvalidId(WebGraphQlTester tester) {
         final UUID chapterId = UUID.randomUUID();
 
         final String query = """

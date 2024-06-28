@@ -5,12 +5,14 @@ import de.unistuttgart.iste.meitrex.common.testutil.MockTestPublisherConfigurati
 import de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser;
 import de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser.UserRoleInCourse;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseEntity;
-import de.unistuttgart.iste.meitrex.course_service.persistence.repository.*;
+import de.unistuttgart.iste.meitrex.course_service.persistence.repository.ChapterRepository;
+import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseMembershipRepository;
+import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseRepository;
 import de.unistuttgart.iste.meitrex.course_service.test_utils.TestUtils;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.graphql.test.tester.HttpGraphQlTester;
+import org.springframework.graphql.test.tester.WebGraphQlTester;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
@@ -41,7 +43,7 @@ class MutationDeleteCourseTest {
      * Then the course is deleted and the uuid is returned
      */
     @Test
-    void testDeletion(HttpGraphQlTester tester) {
+    void testDeletion(WebGraphQlTester tester) {
         // create two courses in the database
         final List<CourseEntity> initialCourses = Stream.of(
                         TestUtils.dummyCourseBuilder().title("Course 1").build(),
@@ -84,7 +86,7 @@ class MutationDeleteCourseTest {
      * Then an error is returned
      */
     @Test
-    void testDeletionInvalidId(HttpGraphQlTester tester) {
+    void testDeletionInvalidId(WebGraphQlTester tester) {
         final UUID courseId = UUID.randomUUID();
 
         // create admin user object

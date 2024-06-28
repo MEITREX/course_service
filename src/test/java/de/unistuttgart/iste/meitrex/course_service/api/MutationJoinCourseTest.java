@@ -2,13 +2,14 @@ package de.unistuttgart.iste.meitrex.course_service.api;
 
 import de.unistuttgart.iste.meitrex.common.testutil.GraphQlApiTest;
 import de.unistuttgart.iste.meitrex.common.testutil.InjectCurrentUserHeader;
-import de.unistuttgart.iste.meitrex.course_service.persistence.entity.*;
+import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseEntity;
+import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseMembershipEntity;
+import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseMembershipPk;
 import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseMembershipRepository;
 import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseRepository;
 import de.unistuttgart.iste.meitrex.generated.dto.UserRoleInCourse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.graphql.test.tester.HttpGraphQlTester;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;

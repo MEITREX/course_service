@@ -5,13 +5,15 @@ import de.unistuttgart.iste.meitrex.common.testutil.MockTestPublisherConfigurati
 import de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.ChapterEntity;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseEntity;
-import de.unistuttgart.iste.meitrex.course_service.persistence.repository.*;
+import de.unistuttgart.iste.meitrex.course_service.persistence.repository.ChapterRepository;
+import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseMembershipRepository;
+import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseRepository;
 import de.unistuttgart.iste.meitrex.course_service.test_utils.TestUtils;
 import de.unistuttgart.iste.meitrex.generated.dto.Chapter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.test.tester.GraphQlTester;
-import org.springframework.graphql.test.tester.HttpGraphQlTester;
+import org.springframework.graphql.test.tester.WebGraphQlTester;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.time.OffsetDateTime;
@@ -40,7 +42,7 @@ class MutationCreateChapterTest {
      * Then the chapter is created and returned
      */
     @Test
-    void testCreateChapter(HttpGraphQlTester tester) {
+    void testCreateChapter(WebGraphQlTester tester) {
         final CourseEntity course = courseRepository.save(CourseEntity.builder()
                 .title("New Course")
                 .description("This is a new course")
@@ -106,7 +108,7 @@ class MutationCreateChapterTest {
      * Then an error is returned
      */
     @Test
-    void testCreateChapterCourseNotExisting(HttpGraphQlTester tester) {
+    void testCreateChapterCourseNotExisting(WebGraphQlTester tester) {
         final UUID courseId = UUID.randomUUID();
 
         // create admin user object
@@ -247,7 +249,7 @@ class MutationCreateChapterTest {
      * Then a validation error is returned
      */
     @Test
-    void testStartDateAfterEndDate(HttpGraphQlTester tester) {
+    void testStartDateAfterEndDate(WebGraphQlTester tester) {
         final UUID courseId = UUID.randomUUID();
 
         // create admin user object
@@ -290,7 +292,7 @@ class MutationCreateChapterTest {
      * Then a validation error is returned
      */
     @Test
-    void testSuggestedStartDateAfterEndDate(HttpGraphQlTester tester) {
+    void testSuggestedStartDateAfterEndDate(WebGraphQlTester tester) {
         final UUID courseId = UUID.randomUUID();
 
         // create admin user object
@@ -334,7 +336,7 @@ class MutationCreateChapterTest {
      * Then a validation error is returned
      */
     @Test
-    void testSuggestedStartDateAfterSuggestedEndDate(HttpGraphQlTester tester) {
+    void testSuggestedStartDateAfterSuggestedEndDate(WebGraphQlTester tester) {
         final UUID courseId = UUID.randomUUID();
 
         // create admin user object
@@ -379,7 +381,7 @@ class MutationCreateChapterTest {
      * Then a validation error is returned
      */
     @Test
-    void testSuggestedStartDateBeforeStartDate(HttpGraphQlTester tester) {
+    void testSuggestedStartDateBeforeStartDate(WebGraphQlTester tester) {
         final UUID courseId = UUID.randomUUID();
 
         // create admin user object
@@ -423,7 +425,7 @@ class MutationCreateChapterTest {
      * Then a validation error is returned
      */
     @Test
-    void testSuggestedEndDateBeforeStartDate(HttpGraphQlTester tester) {
+    void testSuggestedEndDateBeforeStartDate(WebGraphQlTester tester) {
         final UUID courseId = UUID.randomUUID();
 
         // create admin user object
@@ -467,7 +469,7 @@ class MutationCreateChapterTest {
      * Then a validation error is returned
      */
     @Test
-    void testSuggestedEndDateAfterEndDate(HttpGraphQlTester tester) {
+    void testSuggestedEndDateAfterEndDate(WebGraphQlTester tester) {
         final UUID courseId = UUID.randomUUID();
 
         // create admin user object

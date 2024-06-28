@@ -12,12 +12,14 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.ResponseError;
-import org.springframework.graphql.test.tester.HttpGraphQlTester;
+import org.springframework.graphql.test.tester.WebGraphQlTester;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 import static de.unistuttgart.iste.meitrex.common.testutil.TestUsers.userWithMembershipInCourseWithId;
 import static de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser.UserRoleInCourse.STUDENT;
@@ -196,7 +198,7 @@ public class AuthorizationTest {
     }
 
     @Test
-    void testDeleteChapterAdminOnly(HttpGraphQlTester tester) {
+    void testDeleteChapterAdminOnly(WebGraphQlTester tester) {
         final ChapterEntity chapterEntity = chapterRepository.save(TestUtils.dummyChapterBuilder().courseId(courseId).build());
 
         final String query = """
