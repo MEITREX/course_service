@@ -12,6 +12,7 @@ import de.unistuttgart.iste.meitrex.course_service.persistence.validation.Chapte
 import de.unistuttgart.iste.meitrex.generated.dto.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.Nullable;
@@ -27,6 +28,7 @@ import static org.springframework.data.jpa.domain.Specification.where;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ChapterService {
 
     private final ChapterMapper chapterMapper;

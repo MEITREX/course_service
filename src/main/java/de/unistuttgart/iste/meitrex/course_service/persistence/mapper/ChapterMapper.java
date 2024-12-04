@@ -20,7 +20,6 @@ public class ChapterMapper {
 
     public ChapterEntity dtoToEntity(CreateChapterInput chapterInput) {
         ChapterEntity entity = modelMapper.map(chapterInput, ChapterEntity.class);
-        entity.setCourseId(chapterInput.getCourseId());
         return entity;
     }
 
