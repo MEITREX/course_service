@@ -1,5 +1,6 @@
 package de.unistuttgart.iste.meitrex.course_service.service;
 
+import com.google.gson.Gson;
 import de.unistuttgart.iste.meitrex.common.dapr.TopicPublisher;
 import de.unistuttgart.iste.meitrex.common.event.CrudOperation;
 import de.unistuttgart.iste.meitrex.common.util.PaginationUtil;
@@ -17,7 +18,13 @@ import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,6 +37,29 @@ import static org.springframework.data.jpa.domain.Specification.where;
 @RequiredArgsConstructor
 @Slf4j
 public class ChapterService {
+
+    private static class IEEEStandardizedCompetencies {
+        private static class KnowledgeArea {
+            private static class Competence {
+                String title;
+                String description;
+                String taxonomy;
+                String version;
+                int sourceId;
+            }
+            String title;
+            String shortTitle;
+            List<Competence> competencies;
+        }
+        private static class Source {
+            String id;
+            String title;
+            String author;
+            String uri;
+        }
+        List<KnowledgeArea> knowledgeAreas;
+        List<Source> sources;
+    }
 
     private final ChapterMapper chapterMapper;
     private final ChapterRepository chapterRepository;
@@ -58,6 +88,8 @@ public class ChapterService {
      * @throws EntityNotFoundException If the course with the given id does not exist.
      */
     public Chapter createChapter(final CreateChapterInput chapterData) {
+        initializeIEEECompetencies();
+
         chapterValidator.validateCreateChapterInput(chapterData);
         courseService.requireCourseExisting(chapterData.getCourseId());
 
@@ -65,6 +97,27 @@ public class ChapterService {
         chapterEntity = chapterRepository.save(chapterEntity);
 
         return chapterMapper.entityToDto(chapterEntity);
+    }
+
+    public void initializeIEEECompetencies() {
+        var parser = new Gson();
+        File file;
+        try {
+            file = ResourceUtils.getFile("classpath:standardized-comptency-catalog.json");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        try (
+             var in = new FileInputStream(file); ) {
+            var parsedFileContent = parser.fromJson(new String(in.readAllBytes(), Charset.defaultCharset()) , IEEEStandardizedCompetencies.class);
+            for (var area: parsedFileContent.knowledgeAreas) {
+                for (var skill: area.competencies) {
+                    System.out.printf("%s: %s", area.title, skill.title);
+                }
+            }
+        }  catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

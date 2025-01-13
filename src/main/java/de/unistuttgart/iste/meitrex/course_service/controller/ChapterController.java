@@ -6,9 +6,12 @@ import de.unistuttgart.iste.meitrex.course_service.service.ChapterService;
 import de.unistuttgart.iste.meitrex.generated.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.UUID;
 
