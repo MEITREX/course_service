@@ -29,5 +29,5 @@ jobs:
         with:
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          tags: ghcr.io/it-rex-platform/course_service:latest
+          tags: ghcr.io/meitrex/course_service:latest
           push: true
