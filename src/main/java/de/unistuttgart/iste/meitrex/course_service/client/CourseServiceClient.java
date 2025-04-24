@@ -1,6 +1,7 @@
 package de.unistuttgart.iste.meitrex.course_service.client;
 
 import de.unistuttgart.iste.meitrex.course_service.exception.CourseServiceConnectionException;
+import de.unistuttgart.iste.meitrex.generated.dto.Course;
 import de.unistuttgart.iste.meitrex.generated.dto.CourseMembership;
 import org.springframework.graphql.client.ClientGraphQlResponse;
 import org.springframework.graphql.client.FieldAccessException;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 /*
-Client allowing to query course memberships.
+Client allowing to query course info.
  */
 public class CourseServiceClient {
 
@@ -22,6 +23,46 @@ public class CourseServiceClient {
     public CourseServiceClient(GraphQlClient graphQlClient) {
         this.graphQlClient = graphQlClient;
     }
+
+    public Course queryCourseById(final UUID courseId) throws CourseServiceConnectionException {
+        if (courseId == null) {
+            throw new CourseServiceConnectionException("Error fetching course from CourseService: Course ID cannot be null");
+        }
+
+        final String query =
+                """
+                query($courseId: UUID!) {
+                    coursesByIds(ids: [$courseId]) {
+                        id
+                        title
+                    }
+                }
+                """;
+
+        final String queryName = "coursesByIds";
+        List<Course> courseList = null;
+
+        try {
+            courseList = graphQlClient.document(query)
+                    .variable("courseId", courseId)
+                    .execute()
+                    .handle((ClientGraphQlResponse result, SynchronousSink<List<Course>> sink) ->
+                            handleGraphQlResponse(result, sink, queryName, Course.class,
+                                    "Entities(s) with id(s) %s not found".formatted(courseId)))
+                    .retry(RETRY_COUNT)
+                    .block();
+
+        } catch (RuntimeException e) {
+            unwrapCourseServiceConnectionException(e);
+        }
+
+        if (courseList == null || courseList.isEmpty()) {
+            throw new CourseServiceConnectionException("Entities(s) with id(s) %s not found".formatted(courseId));
+        }
+
+        return courseList.getFirst();
+    }
+
 
     public List<CourseMembership> queryMembershipsInCourse(final UUID courseId) throws CourseServiceConnectionException {
         if (courseId == null) {
@@ -49,7 +90,8 @@ public class CourseServiceClient {
                     .variable("courseId", courseId)
                     .execute()
                     .handle((ClientGraphQlResponse result, SynchronousSink<List<CourseMembership>> sink)
-                            -> handleGraphQlResponse(result, sink, queryName))
+                            -> handleGraphQlResponse(result, sink, queryName, CourseMembership.class,
+                            "Error fetching courseMemberships from CourseService: CourseMembership List is empty."))
                     .retry(RETRY_COUNT)
                     .block();
         } catch (RuntimeException e) {
@@ -67,28 +109,35 @@ public class CourseServiceClient {
         return courseMembershipList;
     }
 
-    private void handleGraphQlResponse(final ClientGraphQlResponse result, final SynchronousSink<List<CourseMembership>> sink, final String queryName) {
+    private <T> void handleGraphQlResponse(
+            final ClientGraphQlResponse result,
+            final SynchronousSink<List<T>> sink,
+            final String queryName,
+            final Class<T> clazz,
+            final String emptyListErrorMessage) {
+
         if (!result.isValid()) {
             sink.error(new CourseServiceConnectionException(result.getErrors().toString()));
             return;
         }
 
-        List<CourseMembership> retrievedCourseMemberships;
+        List<T> resultList;
         try {
-            retrievedCourseMemberships = result.field(queryName).toEntityList(CourseMembership.class);
+            resultList = result.field(queryName).toEntityList(clazz);
         } catch (FieldAccessException e) {
-            sink.error(new CourseServiceConnectionException(e.toString()));
+            sink.error(new CourseServiceConnectionException(
+                    "Error fetching from CourseService: Failed to access field '%s': %s".formatted(queryName, e)));
             return;
         }
 
-        // retrievedCourseMemberships == null is always false, therefore no check
-        if (retrievedCourseMemberships.isEmpty()) {
-            sink.error(new CourseServiceConnectionException("Error fetching courseMemberships from CourseService: CourseMembership List is empty."));
+        if (resultList.isEmpty()) {
+            sink.error(new CourseServiceConnectionException(emptyListErrorMessage));
             return;
         }
 
-        sink.next(retrievedCourseMemberships);
+        sink.next(resultList);
     }
+
 
     private static void unwrapCourseServiceConnectionException(final RuntimeException e) throws CourseServiceConnectionException {
         // block wraps exceptions in a RuntimeException, so we need to unwrap them

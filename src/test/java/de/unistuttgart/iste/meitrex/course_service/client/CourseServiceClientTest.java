@@ -54,6 +54,41 @@ public class CourseServiceClientTest {
     }
 
     @Test
+    void testQueryCourseById() throws CourseServiceConnectionException {
+        final CourseServiceClient courseServiceClient = new CourseServiceClient(graphQlClient);
+
+        var courseResult = courseServiceClient.queryCourseById(course.getId());
+
+        assertThat(courseResult, notNullValue());
+        assertThat(courseResult.getTitle(), is(course.getTitle()));
+    }
+
+    @Test
+    void testQueryCourseByWrongId() {
+        final CourseServiceClient courseServiceClient = new CourseServiceClient(graphQlClient);
+        final UUID wrongCourseId = UUID.randomUUID();
+        try {
+            courseServiceClient.queryCourseById(wrongCourseId);
+            assertThat(true, is(false));
+        } catch (CourseServiceConnectionException e) {
+            assertThat(e.getMessage(), containsString("Entities(s) with id(s) %s not found".formatted(wrongCourseId)));
+        }
+    }
+
+
+    @Test
+    void testQueryCourseByNullCourseId() {
+        final CourseServiceClient courseServiceClient = new CourseServiceClient(graphQlClient);
+        try {
+            courseServiceClient.queryCourseById(null);
+            assertThat(true, is(false));
+        } catch (CourseServiceConnectionException e) {
+            assertThat(e.getMessage(), is("Error fetching course from CourseService: Course ID cannot be null"));
+        }
+    }
+
+
+    @Test
     void testQueryMembershipsInCourse() throws CourseServiceConnectionException {
         final CourseServiceClient courseServiceClient = new CourseServiceClient(graphQlClient);
 
