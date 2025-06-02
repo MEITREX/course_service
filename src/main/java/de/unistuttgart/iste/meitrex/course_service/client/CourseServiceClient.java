@@ -71,17 +71,16 @@ public class CourseServiceClient {
 
         final String query =
                 """
-                        query($courseId: UUID!) {
-                            coursesByIds(ids: [$courseId]) {
-                                memberships {
-                                    userId
-                                    courseId
-                                    role
-                                }
-                            }
-                        }
-                        """;
-        String queryName = "coursesByIds[0].memberships";
+                query($courseId: UUID!) {
+                    _internal_noauth_courseMembershipsByCourseId(courseId: $courseId) {
+                        userId
+                        courseId
+                        role
+                    }
+                }
+                """;
+
+        String queryName = "_internal_noauth_courseMembershipsByCourseId";
 
         List<CourseMembership> courseMembershipList = null;
 
