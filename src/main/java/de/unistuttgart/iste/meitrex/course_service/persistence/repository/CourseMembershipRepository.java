@@ -3,6 +3,8 @@ package de.unistuttgart.iste.meitrex.course_service.persistence.repository;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseMembershipEntity;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseMembershipPk;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,4 +31,7 @@ public interface CourseMembershipRepository extends JpaRepository<CourseMembersh
      * @return List of CourseMembershipEntities for the course with the given id.
      */
     List<CourseMembershipEntity> findCourseMembershipEntitiesByCourseId(UUID courseId);
+
+    @Query("SELECT c.userId FROM CourseMembership c WHERE c.courseId = :courseId")
+    List<UUID> findUserIdsByCourseId(@Param("courseId") UUID courseId);
 }
