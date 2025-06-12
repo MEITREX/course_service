@@ -1,4 +1,4 @@
-﻿package de.unistuttgart.iste.meitrex.course_service.api;
+package de.unistuttgart.iste.meitrex.course_service.api;
 
 import de.unistuttgart.iste.meitrex.common.testutil.GraphQlApiTest;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseEntity;
