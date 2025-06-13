@@ -116,6 +116,16 @@ public class MembershipService {
                 .toList();
     }
 
+    /**
+     * Returns all users of a course
+     *
+     * @param courseId ID of the course
+     * @return List of UserIds
+     */
+    public List<UUID> getUserIdsOfCourse(final UUID courseId) {
+            return courseMembershipRepository.findUserIdsByCourseId(courseId);
+        }
+
     private Predicate<? super CourseMembership> byAvailability(final Boolean availableCoursesFilter) {
         return membership -> {
             if (availableCoursesFilter == null) {

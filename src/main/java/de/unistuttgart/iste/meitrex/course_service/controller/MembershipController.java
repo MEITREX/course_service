@@ -21,6 +21,11 @@ public class MembershipController {
 
     private final MembershipService membershipService;
 
+    @QueryMapping(name = "_internal_userIdsByCourseId")
+    public List<UUID> userIdsByCourseId(@Argument UUID courseId) {
+        return membershipService.getUserIdsOfCourse(courseId);
+    }
+
     @QueryMapping(name = "_internal_noauth_courseMembershipsByUserId")
     public List<CourseMembership> courseMembershipsByUserIds(@Argument final UUID userId,
                                                              @Argument final Boolean availabilityFilter) {
