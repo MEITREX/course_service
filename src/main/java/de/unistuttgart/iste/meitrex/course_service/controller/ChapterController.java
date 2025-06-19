@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.*;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
 import java.util.UUID;
@@ -70,6 +71,11 @@ public class ChapterController {
     @QueryMapping(name = "_internal_noauth_chaptersByIds")
     public List<Chapter> chaptersByIds(@Argument final List<UUID> ids) {
         return chapterService.getChaptersByIds(ids);
+    }
+
+    @QueryMapping(name = "_internal_noauth_chaptersByCourseId")
+    public List<Chapter> chaptersByCourseId(@Argument final UUID courseId) {
+        return chapterService.getChaptersByCourseId(courseId);
     }
 
     @SchemaMapping(typeName = "Chapter", field = "course")
