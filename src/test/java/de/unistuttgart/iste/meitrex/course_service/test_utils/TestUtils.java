@@ -33,7 +33,6 @@ public class TestUtils {
      */
     public static CourseEntity.CourseEntityBuilder dummyCourseBuilder() {
         return CourseEntity.builder()
-                .id(UUID.randomUUID())
                 .title("Course 1")
                 .description("This is course 1")
                 .published(false)
