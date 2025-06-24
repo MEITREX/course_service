@@ -16,10 +16,8 @@ import org.springframework.test.web.servlet.client.MockMvcWebTestClient;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
@@ -52,13 +50,13 @@ class CourseServiceClientTest {
     }
 
     @Test
-    void testQueryContentsOfChapter() throws Exception {
+    void testQueryContentsOfChapter() {
         final CourseServiceClient contentServiceClient = new CourseServiceClient(graphQlClient);
 
 
         final var course = courseRepository.save(TestUtils.dummyCourseBuilder().build());
 
-        final ChapterEntity chapterEntity = chapterRepository.save(TestUtils.dummyChapterBuilder().courseId(course.getId()).build());;
+        final ChapterEntity chapterEntity = chapterRepository.save(TestUtils.dummyChapterBuilder().courseId(course.getId()).build());
 
         final List<Chapter> actualChapters = contentServiceClient.queryChapterByCourseId(course.getId());
 

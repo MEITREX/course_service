@@ -12,18 +12,10 @@ import java.util.UUID;
 
 @Slf4j
 public class CourseServiceClient {
-    private static final long RETRY_COUNT = 3;
-
-
-    private String courseServiceUrl;
-
-
-    private final ModelMapper modelMapper;
 
     private final GraphQlClient graphQlClient;
 
     public CourseServiceClient(GraphQlClient graphQlClient) {
-        modelMapper = new ModelMapper();
 
         this.graphQlClient = graphQlClient;
     }

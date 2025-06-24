@@ -1,8 +1,9 @@
 package de.unistuttgart.iste.meitrex.course_service.client;
 
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class QueryDefinitions {
     public static final String CHAPTERS_BY_COURSEID = """
             query($courseId: UUID!) {
