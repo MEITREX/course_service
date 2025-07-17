@@ -141,4 +141,23 @@ class MembershipServiceTest {
         assertThat(resultSet.get(2).getCourseId(), is(courses.get(2).getId()));
     }
 
+    @Test
+    void getUserIdsByCourseIdTest() {
+        UUID courseId = UUID.randomUUID();
+        UUID user1 = UUID.randomUUID();
+        UUID user2 = UUID.randomUUID();
+        List<UUID> mockUserIds = List.of(user1, user2);
+
+        // Mock repository behavior
+        when(courseMembershipRepository.findUserIdsByCourseId(courseId)).thenReturn(mockUserIds);
+
+        // Run method under test
+        List<UUID> result = membershipService.getUserIdsOfCourse(courseId);
+
+        // Assert
+        assertEquals(2, result.size());
+        assertTrue(result.contains(user1));
+        assertTrue(result.contains(user2));
+    }
+
 }

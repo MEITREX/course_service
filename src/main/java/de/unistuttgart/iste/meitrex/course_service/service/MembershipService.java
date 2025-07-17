@@ -108,13 +108,28 @@ public class MembershipService {
      *
      * @param courseId ID of the course
      * @return List of memberships
+     * @throws EntityNotFoundException if the course with the given ID does not exist
      */
     public List<CourseMembership> getMembershipsOfCourse(final UUID courseId) {
+        if (!courseRepository.existsById(courseId)) {
+            throw new EntityNotFoundException("Entities(s) with id(s) %s not found".formatted(courseId));
+        }
+
         return courseMembershipRepository.findCourseMembershipEntitiesByCourseId(courseId)
                 .stream()
                 .map(membershipMapper::entityToDto)
                 .toList();
     }
+
+    /**
+     * Returns all users of a course
+     *
+     * @param courseId ID of the course
+     * @return List of UserIds
+     */
+    public List<UUID> getUserIdsOfCourse(final UUID courseId) {
+            return courseMembershipRepository.findUserIdsByCourseId(courseId);
+        }
 
     private Predicate<? super CourseMembership> byAvailability(final Boolean availableCoursesFilter) {
         return membership -> {
