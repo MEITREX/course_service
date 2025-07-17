@@ -1,5 +1,9 @@
 package de.unistuttgart.iste.meitrex.course_service.client;
 
+
+import de.unistuttgart.iste.meitrex.generated.dto.Chapter;
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import de.unistuttgart.iste.meitrex.course_service.exception.CourseServiceConnectionException;
 import de.unistuttgart.iste.meitrex.generated.dto.Course;
 import de.unistuttgart.iste.meitrex.generated.dto.CourseMembership;
@@ -9,9 +13,11 @@ import org.springframework.graphql.client.GraphQlClient;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import reactor.core.publisher.SynchronousSink;
 
+
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 /*
 Client allowing to query course info.
  */
@@ -21,9 +27,17 @@ public class CourseServiceClient {
     private final GraphQlClient graphQlClient;
 
     public CourseServiceClient(GraphQlClient graphQlClient) {
+
         this.graphQlClient = graphQlClient;
     }
 
+    public List<Chapter> queryChapterByCourseId(final UUID courseId){
+        log.info("queryContentByCourseId {}", courseId);
+        return graphQlClient.document(QueryDefinitions.CHAPTERS_BY_COURSEID)
+                .variable("courseId", courseId)
+                .retrieveSync(QueryDefinitions.CHAPTERS_BY_COURSEID_QUERY_NAME)
+                .toEntityList(Chapter.class);
+    }
     public Course queryCourseById(final UUID courseId) throws CourseServiceConnectionException {
         if (courseId == null) {
             throw new CourseServiceConnectionException("Error fetching course from CourseService: Course ID cannot be null");

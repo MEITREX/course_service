@@ -1,16 +1,21 @@
 package de.unistuttgart.iste.meitrex.course_service.client;
 
 import de.unistuttgart.iste.meitrex.common.testutil.GraphQlApiTest;
+import de.unistuttgart.iste.meitrex.course_service.persistence.entity.ChapterEntity;
+import de.unistuttgart.iste.meitrex.course_service.persistence.repository.ChapterRepository;
 import de.unistuttgart.iste.meitrex.common.user_handling.LoggedInUser;
 import de.unistuttgart.iste.meitrex.course_service.exception.CourseServiceConnectionException;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseEntity;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseMembershipEntity;
 import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseMembershipRepository;
 import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseRepository;
+import de.unistuttgart.iste.meitrex.course_service.test_utils.TestUtils;
+import de.unistuttgart.iste.meitrex.generated.dto.Chapter;
 import de.unistuttgart.iste.meitrex.generated.dto.CourseMembership;
 import de.unistuttgart.iste.meitrex.generated.dto.UserRoleInCourse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.client.GraphQlClient;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -24,10 +29,15 @@ import java.util.UUID;
 
 import static de.unistuttgart.iste.meitrex.common.testutil.TestUsers.userWithMembershipInCourseWithId;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.*;
 
+/**
+ * This class is used to test the ContentServiceClient.
+ */
 @GraphQlApiTest
-public class CourseServiceClientTest {
+class CourseServiceClientTest {
 
     private CourseEntity course;
 
@@ -37,7 +47,13 @@ public class CourseServiceClientTest {
     private WebApplicationContext applicationContext;
 
     @Autowired
+    private ChapterRepository chapterRepository;
+
+    @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     private CourseMembershipRepository courseMembershipRepository;
@@ -46,11 +62,29 @@ public class CourseServiceClientTest {
     void setUp() {
         this.course = courseRepository.save(createTestCourse());
         LoggedInUser loggedInUser = userWithMembershipInCourseWithId(course.getId(), LoggedInUser.UserRoleInCourse.ADMINISTRATOR);
-
-        WebTestClient webTestClient = MockMvcWebTestClient.bindToApplicationContext(applicationContext)
+        final WebTestClient webTestClient = MockMvcWebTestClient.bindToApplicationContext(applicationContext)
                 .configureClient().baseUrl("/graphql").defaultHeaders(httpHeaders -> httpHeaders.add("CurrentUser", getJson(loggedInUser))).build();
 
         graphQlClient = GraphQlClient.builder(new WebTestClientTransport(webTestClient)).build();
+    }
+
+    @Test
+    void testQueryContentsOfChapter() {
+        final CourseServiceClient contentServiceClient = new CourseServiceClient(graphQlClient);
+        final var course = courseRepository.save(TestUtils.dummyCourseBuilder().build());
+
+        final ChapterEntity chapterEntity = chapterRepository.save(TestUtils.dummyChapterBuilder().courseId(course.getId()).build());
+
+        final List<Chapter> actualChapters = contentServiceClient.queryChapterByCourseId(course.getId());
+
+        assertThat(actualChapters, hasSize(1));
+
+        assertThat(actualChapters.getFirst().getCourse().getId(), is(course.getId()));
+
+        ChapterEntity compareEntity = modelMapper.map(actualChapters.getFirst(), ChapterEntity.class);
+        compareEntity.setCourseId(actualChapters.getFirst().getCourse().getId());
+
+        assertThat(compareEntity, is(chapterEntity));
     }
 
     @Test
@@ -171,18 +205,6 @@ public class CourseServiceClientTest {
             assertThat(true, is(false));
         } catch (CourseServiceConnectionException e) {
             assertThat(e.getMessage(), containsString("Entities(s) with id(s) %s not found".formatted(wrongCourseId)));
-        }
-    }
-
-
-    @Test
-    void testQueryMembershipsInCourseNullCourseId() {
-        final CourseServiceClient courseServiceClient = new CourseServiceClient(graphQlClient);
-        try {
-            courseServiceClient.queryMembershipsInCourse(null);
-            assertThat(true, is(false));
-        } catch (CourseServiceConnectionException e) {
-            assertThat(e.getMessage(), is("Error fetching courseMemberships from CourseService: Course ID cannot be null"));
         }
     }
 

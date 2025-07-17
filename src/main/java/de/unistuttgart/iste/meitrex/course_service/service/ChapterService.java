@@ -51,6 +51,19 @@ public class ChapterService {
     }
 
     /**
+     * Gets all chapters with the given courseId.
+     *
+     * @param id The ids of the chapters to get.
+     * @return The chapters with the given ids in order of the given ids.
+     * @throws EntityNotFoundException If at least one of the chapters could not be found.
+     */
+    public List<Chapter> getChaptersByCourseId(final UUID id) {
+        return chapterRepository.findChapterEntitiesByCourseId(id).stream()
+                .map(chapterMapper::entityToDto)
+                .toList();
+    }
+
+    /**
      * Creates a chapter.
      *
      * @param chapterData The data of the chapter to create.

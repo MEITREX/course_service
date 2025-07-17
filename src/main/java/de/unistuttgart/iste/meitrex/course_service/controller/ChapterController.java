@@ -72,6 +72,11 @@ public class ChapterController {
         return chapterService.getChaptersByIds(ids);
     }
 
+    @QueryMapping(name = "_internal_noauth_chaptersByCourseId")
+    public List<Chapter> chaptersByCourseId(@Argument final UUID courseId) {
+        return chapterService.getChaptersByCourseId(courseId);
+    }
+
     @SchemaMapping(typeName = "Chapter", field = "course")
     public Course course(final Chapter chapter) {
         return chapterService.getCourseForChapterId(chapter.getId());
