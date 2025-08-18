@@ -211,6 +211,7 @@ public class AuthorizationTest {
                 "TestUser",
                 "Test",
                 "User",
+                "Testy",
                 List.of(new LoggedInUser.CourseMembership(courseId,
                         STUDENT,
                         false,
