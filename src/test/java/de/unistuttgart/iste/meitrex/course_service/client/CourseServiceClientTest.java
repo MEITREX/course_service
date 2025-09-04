@@ -266,6 +266,7 @@ class CourseServiceClientTest {
                   "userName": "%s",
                   "firstName": "%s",
                   "lastName": "%s",
+                  "nickname": "%s",
                   "courseMemberships": %s,
                   "realmRoles": %s
                 }
@@ -274,6 +275,7 @@ class CourseServiceClientTest {
                         user.getUserName(),
                         user.getFirstName(),
                         user.getLastName(),
+                        user.getNickname(),
                         courseMemberships.toString(),
                         realmRoles.toString());
     }
