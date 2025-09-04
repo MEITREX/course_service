@@ -14,7 +14,7 @@ import org.springframework.context.annotation.*;
  * To use this config, set the spring profile to "dev" (or any other profile that is not "prod").
  */
 @Configuration
-@Profile("dev")
+@Profile("!prod")
 @Slf4j
 public class DevTopicPublisherConfiguration {
 

@@ -14,12 +14,11 @@ import java.util.UUID;
  * Repository for {@link ChapterEntity}.
  */
 public interface ChapterRepository extends MeitrexRepository<ChapterEntity, UUID>, JpaSpecificationExecutor<ChapterEntity> {
+    List<ChapterEntity> findChapterEntitiesByCourseId(UUID courseId);
 
     @Query("SELECT c FROM Chapter c WHERE DATE(c.startDate) = DATE(:now)")
     List<ChapterEntity> findChaptersToUnlock(@Param("now") OffsetDateTime now);
 
     @Query("SELECT c FROM Chapter c WHERE DATE(c.endDate) = DATE(:now)")
     List<ChapterEntity> findChaptersToLock(@Param("now") OffsetDateTime now);
-
-    List<ChapterEntity> findChapterEntitiesByCourseId(UUID courseId);
 }
