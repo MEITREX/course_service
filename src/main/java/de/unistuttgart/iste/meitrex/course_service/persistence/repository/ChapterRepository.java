@@ -30,4 +30,5 @@ public interface ChapterRepository extends MeitrexRepository<ChapterEntity, UUID
     """)
     List<ChapterEntity> findChaptersToLock(@Param("now") OffsetDateTime now);
 
+    List<ChapterEntity> findChapterEntitiesByCourseId(UUID courseId);
 }

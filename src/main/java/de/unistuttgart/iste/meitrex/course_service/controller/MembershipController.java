@@ -32,6 +32,12 @@ public class MembershipController {
         return membershipService.getAllMembershipByUserId(userId, availabilityFilter);
     }
 
+    @QueryMapping(name = "_internal_noauth_courseMembershipsByCourseId")
+    public List<CourseMembership> courseMembershipsByCourse(@Argument final UUID courseId) {
+
+        return membershipService.getMembershipsOfCourse(courseId);
+    }
+
     @MutationMapping
     public CourseMembership joinCourse(@Argument final UUID courseId,
                              @ContextValue final LoggedInUser currentUser) {

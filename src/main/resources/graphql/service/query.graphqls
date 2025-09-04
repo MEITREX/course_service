@@ -35,6 +35,21 @@ type Query {
     """
     _internal_noauth_chaptersByIds(ids: [UUID!]!): [Chapter!]!
 
+
+    """
+    Returns the course with the given id.
+    ⚠️ This query is only accessible internally in the system and allows the caller to retrieve courseMemberships for
+    any user and should not be called without any validation of the caller's permissions. ⚠️
+    """
+    _internal_noauth_courseById(id: UUID!): Course!
+
+    """
+    Returns the chapters with the given courseId.
+    ⚠️ This query is only accessible internally in the system and allows the caller to retrieve courseMemberships for
+    any user and should not be called without any validation of the caller's permissions. ⚠️
+    """
+    _internal_noauth_chaptersByCourseId(courseId: UUID!): [Chapter!]!
+
     """
     Returns the list of courseMemberships for the specified user.
     ⚠️ This query is only accessible internally in the system and allows the caller to retrieve courseMemberships for
@@ -55,5 +70,11 @@ type Query {
         """
         availabilityFilter: Boolean = null) : [CourseMembership!]!
 
+    """
+    Returns the courseMemberships for the specified course.
+    ⚠️ This query is only accessible internally in the system and allows the caller to retrieve courseMemberships for
+    any course and should not be called without any validation of the caller's permissions. ⚠️
+    """
+    _internal_noauth_courseMembershipsByCourseId(courseId: UUID!): [CourseMembership!]!
 
 }
