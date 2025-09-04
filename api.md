@@ -3,16 +3,16 @@
 <details>
   <summary><strong>Table of Contents</strong></summary>
 
-* [Query](#query)
-* [Mutation](#mutation)
-* [Objects](#objects)
+  * [Query](#query)
+  * [Mutation](#mutation)
+  * [Objects](#objects)
     * [Chapter](#chapter)
     * [ChapterPayload](#chapterpayload)
     * [Course](#course)
     * [CourseMembership](#coursemembership)
     * [CoursePayload](#coursepayload)
     * [PaginationInfo](#paginationinfo)
-* [Inputs](#inputs)
+  * [Inputs](#inputs)
     * [ChapterFilter](#chapterfilter)
     * [CourseFilter](#coursefilter)
     * [CourseMembershipInput](#coursemembershipinput)
@@ -24,11 +24,11 @@
     * [StringFilter](#stringfilter)
     * [UpdateChapterInput](#updatechapterinput)
     * [UpdateCourseInput](#updatecourseinput)
-* [Enums](#enums)
+  * [Enums](#enums)
     * [SortDirection](#sortdirection)
     * [UserRoleInCourse](#userroleincourse)
     * [YearDivision](#yeardivision)
-* [Scalars](#scalars)
+  * [Scalars](#scalars)
     * [Boolean](#boolean)
     * [Date](#date)
     * [DateTime](#datetime)
@@ -53,10 +53,9 @@
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>courses</strong></td>
+<td colspan="2" valign="top"><strong id="query.courses">courses</strong></td>
 <td valign="top"><a href="#coursepayload">CoursePayload</a>!</td>
 <td>
-
 
 Get a list of courses. Can be filtered, sorted and paginated.
 Courses and their basic data can be queried by any user, even if they are not enrolled in the course.
@@ -73,7 +72,6 @@ Courses and their basic data can be queried by any user, even if they are not en
 <td valign="top">[<a href="#string">String</a>!]</td>
 <td>
 
-
 The fields to sort by.
 Throws an error if no field with the given name exists.
 
@@ -83,7 +81,6 @@ Throws an error if no field with the given name exists.
 <td colspan="2" align="right" valign="top">sortDirection</td>
 <td valign="top">[<a href="#sortdirection">SortDirection</a>!]!</td>
 <td>
-
 
 The sort direction for each field. If not specified, defaults to ASC.
 
@@ -95,10 +92,9 @@ The sort direction for each field. If not specified, defaults to ASC.
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>coursesByIds</strong></td>
+<td colspan="2" valign="top"><strong id="query.coursesbyids">coursesByIds</strong></td>
 <td valign="top">[<a href="#course">Course</a>!]!</td>
 <td>
-
 
 Returns the courses with the given ids.
 Courses and their basic data can be queried by any user, even if they are not enrolled in the course.
@@ -111,10 +107,23 @@ Courses and their basic data can be queried by any user, even if they are not en
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>_internal_noauth_chaptersByIds</strong></td>
-<td valign="top">[<a href="#chapter">Chapter</a>!]!</td>
+<td colspan="2" valign="top"><strong id="query._internal_useridsbycourseid">_internal_userIdsByCourseId</strong></td>
+<td valign="top">[<a href="#uuid">UUID</a>!]!</td>
 <td>
 
+Returns the users who subscribed the given course id.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">courseId</td>
+<td valign="top"><a href="#uuid">UUID</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="query._internal_noauth_chaptersbyids">_internal_noauth_chaptersByIds</strong></td>
+<td valign="top">[<a href="#chapter">Chapter</a>!]!</td>
+<td>
 
 Returns the chapters with the given ids.
 ⚠️ This query is only accessible internally in the system and allows the caller to retrieve courseMemberships for
@@ -128,10 +137,41 @@ any user and should not be called without any validation of the caller's permiss
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>_internal_noauth_courseMembershipsByUserId</strong></td>
-<td valign="top">[<a href="#coursemembership">CourseMembership</a>!]!</td>
+<td colspan="2" valign="top"><strong id="query._internal_noauth_coursebyid">_internal_noauth_courseById</strong></td>
+<td valign="top"><a href="#course">Course</a>!</td>
 <td>
 
+Returns the course with the given id.
+⚠️ This query is only accessible internally in the system and allows the caller to retrieve courseMemberships for
+any user and should not be called without any validation of the caller's permissions. ⚠️
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">id</td>
+<td valign="top"><a href="#uuid">UUID</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="query._internal_noauth_chaptersbycourseid">_internal_noauth_chaptersByCourseId</strong></td>
+<td valign="top">[<a href="#chapter">Chapter</a>!]!</td>
+<td>
+
+Returns the chapters with the given courseId.
+⚠️ This query is only accessible internally in the system and allows the caller to retrieve courseMemberships for
+any user and should not be called without any validation of the caller's permissions. ⚠️
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">courseId</td>
+<td valign="top"><a href="#uuid">UUID</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="query._internal_noauth_coursemembershipsbyuserid">_internal_noauth_courseMembershipsByUserId</strong></td>
+<td valign="top">[<a href="#coursemembership">CourseMembership</a>!]!</td>
+<td>
 
 Returns the list of courseMemberships for the specified user.
 ⚠️ This query is only accessible internally in the system and allows the caller to retrieve courseMemberships for
@@ -144,7 +184,6 @@ any user and should not be called without any validation of the caller's permiss
 <td valign="top"><a href="#uuid">UUID</a>!</td>
 <td>
 
-
 The id of the user to get the courseMemberships for.
 
 </td>
@@ -154,15 +193,30 @@ The id of the user to get the courseMemberships for.
 <td valign="top"><a href="#boolean">Boolean</a></td>
 <td>
 
+Filter field to filter for available or unavailable courses.
+If this field is true, only available courses are returned.
+If this field is false, only unavailable courses are returned.
+If this field is null, all courses are returned.
 
-        Filter field to filter for available or unavailable courses.
-        If this field is true, only available courses are returned.
-        If this field is false, only unavailable courses are returned.
-        If this field is null, all courses are returned.
-
-        A course is available if it is published, the start date is in the past and the end date is in the future.,
+A course is available if it is published, the start date is in the past and the end date is in the future.,
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="query._internal_noauth_coursemembershipsbycourseid">_internal_noauth_courseMembershipsByCourseId</strong></td>
+<td valign="top">[<a href="#coursemembership">CourseMembership</a>!]!</td>
+<td>
+
+Returns the courseMemberships for the specified course.
+⚠️ This query is only accessible internally in the system and allows the caller to retrieve courseMemberships for
+any course and should not be called without any validation of the caller's permissions. ⚠️
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">courseId</td>
+<td valign="top"><a href="#uuid">UUID</a>!</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -179,10 +233,9 @@ The id of the user to get the courseMemberships for.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>createCourse</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.createcourse">createCourse</strong></td>
 <td valign="top"><a href="#course">Course</a>!</td>
 <td>
-
 
 Creates a new course with the given input and returns the created course.
 
@@ -194,10 +247,9 @@ Creates a new course with the given input and returns the created course.
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>createChapter</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.createchapter">createChapter</strong></td>
 <td valign="top"><a href="#chapter">Chapter</a>!</td>
 <td>
-
 
 Creates a new chapter with the given input and returns the created chapter.
 The course id must be a course id of an existing course.
@@ -211,10 +263,9 @@ The course id must be a course id of an existing course.
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>updateCourse</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.updatecourse">updateCourse</strong></td>
 <td valign="top"><a href="#course">Course</a>!</td>
 <td>
-
 
 Updates an existing course with the given input and returns the updated course.
 The course id must be a course id of an existing course.
@@ -228,10 +279,9 @@ The course id must be a course id of an existing course.
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>updateChapter</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.updatechapter">updateChapter</strong></td>
 <td valign="top"><a href="#chapter">Chapter</a>!</td>
 <td>
-
 
 Updates an existing chapter with the given input and returns the updated chapter.
 The chapter id must be a chapter id of an existing chapter.
@@ -245,10 +295,9 @@ The chapter id must be a chapter id of an existing chapter.
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deleteCourse</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.deletecourse">deleteCourse</strong></td>
 <td valign="top"><a href="#uuid">UUID</a>!</td>
 <td>
-
 
 Deletes an existing course, throws an error if no course with the given id exists.
 🔒 The user must be an admin in this course to perform this action.
@@ -261,10 +310,9 @@ Deletes an existing course, throws an error if no course with the given id exist
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deleteChapter</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.deletechapter">deleteChapter</strong></td>
 <td valign="top"><a href="#uuid">UUID</a>!</td>
 <td>
-
 
 Deletes an existing chapter, throws an error if no chapter with the given id exists.
 🔒 The user must be an admin in this course to perform this action.
@@ -277,10 +325,9 @@ Deletes an existing chapter, throws an error if no chapter with the given id exi
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>joinCourse</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.joincourse">joinCourse</strong></td>
 <td valign="top"><a href="#coursemembership">CourseMembership</a>!</td>
 <td>
-
 
 Lets the current user join a course as a student.
 
@@ -292,10 +339,9 @@ Lets the current user join a course as a student.
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>leaveCourse</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.leavecourse">leaveCourse</strong></td>
 <td valign="top"><a href="#coursemembership">CourseMembership</a>!</td>
 <td>
-
 
 Lets the current user leave a course. Returns the membership that was deleted.
 
@@ -307,10 +353,9 @@ Lets the current user leave a course. Returns the membership that was deleted.
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>createMembership</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.createmembership">createMembership</strong></td>
 <td valign="top"><a href="#coursemembership">CourseMembership</a>!</td>
 <td>
-
 
 Adds the specified user to the specified course with the specified role.
 🔒 The calling user must be an admin in this course to perform this action.
@@ -323,10 +368,9 @@ Adds the specified user to the specified course with the specified role.
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>updateMembership</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.updatemembership">updateMembership</strong></td>
 <td valign="top"><a href="#coursemembership">CourseMembership</a>!</td>
 <td>
-
 
 Updates a user's membership in a course with the given input.
 🔒 The calling user must be an admin in this course to perform this action.
@@ -339,10 +383,9 @@ Updates a user's membership in a course with the given input.
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deleteMembership</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.deletemembership">deleteMembership</strong></td>
 <td valign="top"><a href="#coursemembership">CourseMembership</a>!</td>
 <td>
-
 
 Removes the specified user's access to the specified course.
 🔒 The calling user must be an admin in this course to perform this action.
@@ -361,7 +404,6 @@ Removes the specified user's access to the specified course.
 
 ### Chapter
 
-
 A chapter is a part of a course.
 
 <table>
@@ -375,70 +417,63 @@ A chapter is a part of a course.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>id</strong></td>
+<td colspan="2" valign="top"><strong id="chapter.id">id</strong></td>
 <td valign="top"><a href="#uuid">UUID</a>!</td>
 <td>
-
 
 UUID of the chapter, generated automatically
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>title</strong></td>
+<td colspan="2" valign="top"><strong id="chapter.title">title</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
-
 
 Title of the chapter, maximum length is 255 characters.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="chapter.description">description</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
-
 
 Description of the chapter, maximum length is 3000 characters.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>number</strong></td>
+<td colspan="2" valign="top"><strong id="chapter.number">number</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
-
 
 Number of the chapter, determines the order of the chapters.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>startDate</strong></td>
+<td colspan="2" valign="top"><strong id="chapter.startdate">startDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
-
 
 Start date of the chapter, ISO 8601 format.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>endDate</strong></td>
+<td colspan="2" valign="top"><strong id="chapter.enddate">endDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
-
 
 End date of the chapter, ISO 8601 format.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>suggestedStartDate</strong></td>
+<td colspan="2" valign="top"><strong id="chapter.suggestedstartdate">suggestedStartDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
-
 
 Suggested Start date to start the chapter, ISO 8601 format.
 Must be after Start Date and before the End dates.
@@ -446,10 +481,9 @@ Must be after Start Date and before the End dates.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>suggestedEndDate</strong></td>
+<td colspan="2" valign="top"><strong id="chapter.suggestedenddate">suggestedEndDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
-
 
 Suggested End date of the chapter, ISO 8601 format.
 Must be after the Start Dates and before the End dates.
@@ -457,10 +491,9 @@ Must be after the Start Dates and before the End dates.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>course</strong></td>
+<td colspan="2" valign="top"><strong id="chapter.course">course</strong></td>
 <td valign="top"><a href="#course">Course</a>!</td>
 <td>
-
 
 The course the chapter belongs to.
 
@@ -470,7 +503,6 @@ The course the chapter belongs to.
 </table>
 
 ### ChapterPayload
-
 
 Return type of the chapters query, contains a list of chapters and pagination info.
 
@@ -485,12 +517,12 @@ Return type of the chapters query, contains a list of chapters and pagination in
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>elements</strong></td>
+<td colspan="2" valign="top"><strong id="chapterpayload.elements">elements</strong></td>
 <td valign="top">[<a href="#chapter">Chapter</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pagination</strong></td>
+<td colspan="2" valign="top"><strong id="chapterpayload.pagination">pagination</strong></td>
 <td valign="top"><a href="#paginationinfo">PaginationInfo</a>!</td>
 <td></td>
 </tr>
@@ -498,7 +530,6 @@ Return type of the chapters query, contains a list of chapters and pagination in
 </table>
 
 ### Course
-
 
 Courses are the main entity of the application. They are the top level of the
 hierarchy and contain chapters.
@@ -514,40 +545,36 @@ hierarchy and contain chapters.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>id</strong></td>
+<td colspan="2" valign="top"><strong id="course.id">id</strong></td>
 <td valign="top"><a href="#uuid">UUID</a>!</td>
 <td>
-
 
 UUID of the course. Generated automatically when creating a new course.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>title</strong></td>
+<td colspan="2" valign="top"><strong id="course.title">title</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
-
 
 Title of the course. Maximal length is 255 characters, must not be blank.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="course.description">description</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
-
 
 Detailed description of the course. Maximal length is 3000 characters.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>startDate</strong></td>
+<td colspan="2" valign="top"><strong id="course.startdate">startDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
-
 
 Start date of the course, ISO 8601 format.
 Users can only access the course and work on course content after the start date.
@@ -556,10 +583,9 @@ Must be before the end date.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>endDate</strong></td>
+<td colspan="2" valign="top"><strong id="course.enddate">endDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
-
 
 End date of the course, ISO 8601 format.
 Users can no longer access the course and work on course content after the end date.
@@ -568,40 +594,36 @@ Must be after the start date.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>published</strong></td>
+<td colspan="2" valign="top"><strong id="course.published">published</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
-
 
 Published state of the course. If the course is published, it is visible to users.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>startYear</strong></td>
+<td colspan="2" valign="top"><strong id="course.startyear">startYear</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
-
 
 The year in which the term starts.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>yearDivision</strong></td>
+<td colspan="2" valign="top"><strong id="course.yeardivision">yearDivision</strong></td>
 <td valign="top"><a href="#yeardivision">YearDivision</a></td>
 <td>
-
 
 The division of the academic calendar in which the term takes place.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>chapters</strong></td>
+<td colspan="2" valign="top"><strong id="course.chapters">chapters</strong></td>
 <td valign="top"><a href="#chapterpayload">ChapterPayload</a>!</td>
 <td>
-
 
 Chapters of the course. Can be filtered and sorted.
 🔒 User needs to be enrolled in the course to access this field.
@@ -618,7 +640,6 @@ Chapters of the course. Can be filtered and sorted.
 <td valign="top">[<a href="#string">String</a>!]!</td>
 <td>
 
-
 The fields to sort by. The default sort order is by chapter number.
 Throws an error if no field with the given name exists.
 
@@ -628,7 +649,6 @@ Throws an error if no field with the given name exists.
 <td colspan="2" align="right" valign="top">sortDirection</td>
 <td valign="top">[<a href="#sortdirection">SortDirection</a>!]!</td>
 <td>
-
 
 The sort direction for each field. If not specified, defaults to ASC.
 
@@ -640,10 +660,9 @@ The sort direction for each field. If not specified, defaults to ASC.
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>memberships</strong></td>
+<td colspan="2" valign="top"><strong id="course.memberships">memberships</strong></td>
 <td valign="top">[<a href="#coursemembership">CourseMembership</a>!]!</td>
 <td>
-
 
 Course Memberships of this course. Contains information about which users are members of the course and what
 role they have in it.
@@ -656,8 +675,7 @@ role they have in it.
 
 ### CourseMembership
 
-Represents a course membership object of a user. Each user can be a member of set of courses and some users can also own
-courses
+Represents a course membership object of a user. Each user can be a member of set of courses and some users can also own courses
 
 <table>
 <thead>
@@ -670,40 +688,36 @@ courses
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>userId</strong></td>
+<td colspan="2" valign="top"><strong id="coursemembership.userid">userId</strong></td>
 <td valign="top"><a href="#uuid">UUID</a>!</td>
 <td>
-
 
 Id of the user.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>courseId</strong></td>
+<td colspan="2" valign="top"><strong id="coursemembership.courseid">courseId</strong></td>
 <td valign="top"><a href="#uuid">UUID</a>!</td>
 <td>
-
 
 Id of the course the user is a member of.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>role</strong></td>
+<td colspan="2" valign="top"><strong id="coursemembership.role">role</strong></td>
 <td valign="top"><a href="#userroleincourse">UserRoleInCourse</a>!</td>
 <td>
-
 
 The role of the user in the course.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>course</strong></td>
+<td colspan="2" valign="top"><strong id="coursemembership.course">course</strong></td>
 <td valign="top"><a href="#course">Course</a>!</td>
 <td>
-
 
 Course of the Course Membership
 
@@ -727,12 +741,12 @@ Return type for the course query. Contains the course and the pagination info.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>elements</strong></td>
+<td colspan="2" valign="top"><strong id="coursepayload.elements">elements</strong></td>
 <td valign="top">[<a href="#course">Course</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pagination</strong></td>
+<td colspan="2" valign="top"><strong id="coursepayload.pagination">pagination</strong></td>
 <td valign="top"><a href="#paginationinfo">PaginationInfo</a>!</td>
 <td></td>
 </tr>
@@ -754,50 +768,45 @@ Return type for information about paginated results.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>page</strong></td>
+<td colspan="2" valign="top"><strong id="paginationinfo.page">page</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
-
 
 The current page number.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>size</strong></td>
+<td colspan="2" valign="top"><strong id="paginationinfo.size">size</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
-
 
 The number of elements per page.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalElements</strong></td>
+<td colspan="2" valign="top"><strong id="paginationinfo.totalelements">totalElements</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
-
 
 The total number of elements across all pages.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalPages</strong></td>
+<td colspan="2" valign="top"><strong id="paginationinfo.totalpages">totalPages</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
-
 
 The total number of pages.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hasNext</strong></td>
+<td colspan="2" valign="top"><strong id="paginationinfo.hasnext">hasNext</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
-
 
 Whether there is a next page.
 
@@ -820,52 +829,52 @@ Whether there is a next page.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>title</strong></td>
+<td colspan="2" valign="top"><strong id="chapterfilter.title">title</strong></td>
 <td valign="top"><a href="#stringfilter">StringFilter</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="chapterfilter.description">description</strong></td>
 <td valign="top"><a href="#stringfilter">StringFilter</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>number</strong></td>
+<td colspan="2" valign="top"><strong id="chapterfilter.number">number</strong></td>
 <td valign="top"><a href="#intfilter">IntFilter</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>startDate</strong></td>
+<td colspan="2" valign="top"><strong id="chapterfilter.startdate">startDate</strong></td>
 <td valign="top"><a href="#datetimefilter">DateTimeFilter</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>endDate</strong></td>
+<td colspan="2" valign="top"><strong id="chapterfilter.enddate">endDate</strong></td>
 <td valign="top"><a href="#datetimefilter">DateTimeFilter</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>suggestedStartDate</strong></td>
+<td colspan="2" valign="top"><strong id="chapterfilter.suggestedstartdate">suggestedStartDate</strong></td>
 <td valign="top"><a href="#datetimefilter">DateTimeFilter</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>suggestedEndDate</strong></td>
+<td colspan="2" valign="top"><strong id="chapterfilter.suggestedenddate">suggestedEndDate</strong></td>
 <td valign="top"><a href="#datetimefilter">DateTimeFilter</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>and</strong></td>
+<td colspan="2" valign="top"><strong id="chapterfilter.and">and</strong></td>
 <td valign="top">[<a href="#chapterfilter">ChapterFilter</a>!]</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>or</strong></td>
+<td colspan="2" valign="top"><strong id="chapterfilter.or">or</strong></td>
 <td valign="top">[<a href="#chapterfilter">ChapterFilter</a>!]</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>not</strong></td>
+<td colspan="2" valign="top"><strong id="chapterfilter.not">not</strong></td>
 <td valign="top"><a href="#chapterfilter">ChapterFilter</a></td>
 <td></td>
 </tr>
@@ -887,42 +896,42 @@ If multiple filters are specified, they are combined with AND (except for the or
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>title</strong></td>
+<td colspan="2" valign="top"><strong id="coursefilter.title">title</strong></td>
 <td valign="top"><a href="#stringfilter">StringFilter</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="coursefilter.description">description</strong></td>
 <td valign="top"><a href="#stringfilter">StringFilter</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>startDate</strong></td>
+<td colspan="2" valign="top"><strong id="coursefilter.startdate">startDate</strong></td>
 <td valign="top"><a href="#datetimefilter">DateTimeFilter</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>endDate</strong></td>
+<td colspan="2" valign="top"><strong id="coursefilter.enddate">endDate</strong></td>
 <td valign="top"><a href="#datetimefilter">DateTimeFilter</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>published</strong></td>
+<td colspan="2" valign="top"><strong id="coursefilter.published">published</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>and</strong></td>
+<td colspan="2" valign="top"><strong id="coursefilter.and">and</strong></td>
 <td valign="top">[<a href="#coursefilter">CourseFilter</a>!]</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>or</strong></td>
+<td colspan="2" valign="top"><strong id="coursefilter.or">or</strong></td>
 <td valign="top">[<a href="#coursefilter">CourseFilter</a>!]</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>not</strong></td>
+<td colspan="2" valign="top"><strong id="coursefilter.not">not</strong></td>
 <td valign="top"><a href="#coursefilter">CourseFilter</a></td>
 <td></td>
 </tr>
@@ -943,30 +952,27 @@ Represents a course membership input object of a user.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>userId</strong></td>
+<td colspan="2" valign="top"><strong id="coursemembershipinput.userid">userId</strong></td>
 <td valign="top"><a href="#uuid">UUID</a>!</td>
 <td>
-
 
 Id of the user.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>courseId</strong></td>
+<td colspan="2" valign="top"><strong id="coursemembershipinput.courseid">courseId</strong></td>
 <td valign="top"><a href="#uuid">UUID</a>!</td>
 <td>
-
 
 Id of the course the user is a member of.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>role</strong></td>
+<td colspan="2" valign="top"><strong id="coursemembershipinput.role">role</strong></td>
 <td valign="top"><a href="#userroleincourse">UserRoleInCourse</a>!</td>
 <td>
-
 
 The role of the user in the course.
 
@@ -989,40 +995,36 @@ Input type for creating chapters.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>title</strong></td>
+<td colspan="2" valign="top"><strong id="createchapterinput.title">title</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
-
 
 Title of the chapter, maximum length is 255 characters, must not be blank.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="createchapterinput.description">description</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
-
 
 Description of the chapter, maximum length is 3000 characters.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>number</strong></td>
+<td colspan="2" valign="top"><strong id="createchapterinput.number">number</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
-
 
 Number of the chapter, determines the order of the chapters, must be positive.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>startDate</strong></td>
+<td colspan="2" valign="top"><strong id="createchapterinput.startdate">startDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
-
 
 Start date of the chapter, ISO 8601 format.
 Must be before the end date.
@@ -1030,10 +1032,9 @@ Must be before the end date.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>endDate</strong></td>
+<td colspan="2" valign="top"><strong id="createchapterinput.enddate">endDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
-
 
 End date of the chapter, ISO 8601 format.
 Must be after the start date.
@@ -1041,10 +1042,9 @@ Must be after the start date.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>suggestedStartDate</strong></td>
+<td colspan="2" valign="top"><strong id="createchapterinput.suggestedstartdate">suggestedStartDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
-
 
 Suggested Start date to start the chapter, ISO 8601 format.
 Must be after Start Date and before the End dates.
@@ -1052,10 +1052,9 @@ Must be after Start Date and before the End dates.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>suggestedEndDate</strong></td>
+<td colspan="2" valign="top"><strong id="createchapterinput.suggestedenddate">suggestedEndDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
-
 
 Suggested End date of the chapter, ISO 8601 format.
 Must be after the Start Dates and before the End dates.
@@ -1063,10 +1062,9 @@ Must be after the Start Dates and before the End dates.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>courseId</strong></td>
+<td colspan="2" valign="top"><strong id="createchapterinput.courseid">courseId</strong></td>
 <td valign="top"><a href="#uuid">UUID</a>!</td>
 <td>
-
 
 ID of the course the chapter belongs to.
 Must be a UUID of an existing course.
@@ -1090,30 +1088,27 @@ Input type for creating a new course. See also on the course type for detailed f
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>title</strong></td>
+<td colspan="2" valign="top"><strong id="createcourseinput.title">title</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
-
 
 Title of the course, max 255 characters, must not be blank.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="createcourseinput.description">description</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
-
 
 Description of the course, max 3000 characters.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>startDate</strong></td>
+<td colspan="2" valign="top"><strong id="createcourseinput.startdate">startDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
-
 
 Start date of the course, ISO 8601 format.
 Must be before the end date.
@@ -1121,10 +1116,9 @@ Must be before the end date.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>endDate</strong></td>
+<td colspan="2" valign="top"><strong id="createcourseinput.enddate">endDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
-
 
 End date of the course, ISO 8601 format.
 Must be after the start date.
@@ -1132,30 +1126,27 @@ Must be after the start date.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>published</strong></td>
+<td colspan="2" valign="top"><strong id="createcourseinput.published">published</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
-
 
 Published status of the course.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>startYear</strong></td>
+<td colspan="2" valign="top"><strong id="createcourseinput.startyear">startYear</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
-
 
 The year in which the term starts.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>yearDivision</strong></td>
+<td colspan="2" valign="top"><strong id="createcourseinput.yeardivision">yearDivision</strong></td>
 <td valign="top"><a href="#yeardivision">YearDivision</a></td>
 <td>
-
 
 The division of the academic calendar in which the term takes place.
 
@@ -1179,20 +1170,18 @@ If multiple filters are specified, they are combined with AND.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>after</strong></td>
+<td colspan="2" valign="top"><strong id="datetimefilter.after">after</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
-
 
 If specified, filters for dates after the specified value.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>before</strong></td>
+<td colspan="2" valign="top"><strong id="datetimefilter.before">before</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
-
 
 If specified, filters for dates before the specified value.
 
@@ -1216,30 +1205,27 @@ If multiple filters are specified, they are combined with AND.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>equals</strong></td>
+<td colspan="2" valign="top"><strong id="intfilter.equals">equals</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
-
 
 An integer value to match exactly.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>greaterThan</strong></td>
+<td colspan="2" valign="top"><strong id="intfilter.greaterthan">greaterThan</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
-
 
 If specified, filters for values greater than to the specified value.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lessThan</strong></td>
+<td colspan="2" valign="top"><strong id="intfilter.lessthan">lessThan</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
-
 
 If specified, filters for values less than to the specified value.
 
@@ -1262,10 +1248,9 @@ Specifies the page size and page number for paginated results.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>page</strong></td>
+<td colspan="2" valign="top"><strong id="pagination.page">page</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
-
 
 The page number, starting at 0.
 If not specified, the default value is 0.
@@ -1275,10 +1260,9 @@ If this value is larger than the number of pages, an empty page is returned.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>size</strong></td>
+<td colspan="2" valign="top"><strong id="pagination.size">size</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
-
 
 The number of elements per page.
 
@@ -1302,30 +1286,27 @@ If multiple filters are specified, they are combined with AND.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>equals</strong></td>
+<td colspan="2" valign="top"><strong id="stringfilter.equals">equals</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
-
 
 A string value to match exactly.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>contains</strong></td>
+<td colspan="2" valign="top"><strong id="stringfilter.contains">contains</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
-
 
 A string value that must be contained in the field that is being filtered.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ignoreCase</strong></td>
+<td colspan="2" valign="top"><strong id="stringfilter.ignorecase">ignoreCase</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
-
 
 If true, the filter is case-insensitive.
 
@@ -1349,50 +1330,45 @@ The ID field specifies which chapter should be updated, all other fields specify
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>id</strong></td>
+<td colspan="2" valign="top"><strong id="updatechapterinput.id">id</strong></td>
 <td valign="top"><a href="#uuid">UUID</a>!</td>
 <td>
-
 
 UUID of the chapter that should be updated.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>title</strong></td>
+<td colspan="2" valign="top"><strong id="updatechapterinput.title">title</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
-
 
 Title of the chapter, maximum length is 255 characters, must not be blank.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="updatechapterinput.description">description</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
-
 
 Description of the chapter, maximum length is 3000 characters.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>number</strong></td>
+<td colspan="2" valign="top"><strong id="updatechapterinput.number">number</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
-
 
 Number of the chapter, determines the order of the chapters, must be positive.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>startDate</strong></td>
+<td colspan="2" valign="top"><strong id="updatechapterinput.startdate">startDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
-
 
 Start date of the chapter, ISO 8601 format.
 Must be before the end date.
@@ -1400,10 +1376,9 @@ Must be before the end date.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>endDate</strong></td>
+<td colspan="2" valign="top"><strong id="updatechapterinput.enddate">endDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
-
 
 End date of the chapter, ISO 8601 format.
 Must be after the start date.
@@ -1411,10 +1386,9 @@ Must be after the start date.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>suggestedStartDate</strong></td>
+<td colspan="2" valign="top"><strong id="updatechapterinput.suggestedstartdate">suggestedStartDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
-
 
 Suggested Start date to start the chapter, ISO 8601 format.
 Must be after Start Date and before the End dates.
@@ -1422,10 +1396,9 @@ Must be after Start Date and before the End dates.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>suggestedEndDate</strong></td>
+<td colspan="2" valign="top"><strong id="updatechapterinput.suggestedenddate">suggestedEndDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
-
 
 Suggested End date of the chapter, ISO 8601 format.
 Must be after the Start Dates and before the End dates.
@@ -1450,10 +1423,9 @@ The id specifies the course that should be updated, the other fields specify the
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>id</strong></td>
+<td colspan="2" valign="top"><strong id="updatecourseinput.id">id</strong></td>
 <td valign="top"><a href="#uuid">UUID</a>!</td>
 <td>
-
 
 UUID of the course that should be updated.
 Must be an id of an existing course, otherwise an error is returned.
@@ -1461,70 +1433,63 @@ Must be an id of an existing course, otherwise an error is returned.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>title</strong></td>
+<td colspan="2" valign="top"><strong id="updatecourseinput.title">title</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
-
 
 The new title of the course, max 255 characters, must not be blank.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="updatecourseinput.description">description</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
-
 
 The new description of the course, max 3000 characters.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>startDate</strong></td>
+<td colspan="2" valign="top"><strong id="updatecourseinput.startdate">startDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
-
 
 The new start date of the course, ISO 8601 format.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>endDate</strong></td>
+<td colspan="2" valign="top"><strong id="updatecourseinput.enddate">endDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
-
 
 The new end date of the course, ISO 8601 format.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>published</strong></td>
+<td colspan="2" valign="top"><strong id="updatecourseinput.published">published</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
-
 
 The new published status of the course.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>startYear</strong></td>
+<td colspan="2" valign="top"><strong id="updatecourseinput.startyear">startYear</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
-
 
 The year in which the term starts.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>yearDivision</strong></td>
+<td colspan="2" valign="top"><strong id="updatecourseinput.yeardivision">yearDivision</strong></td>
 <td valign="top"><a href="#yeardivision">YearDivision</a></td>
 <td>
-
 
 The division of the academic calendar in which the term takes place.
 
@@ -1541,8 +1506,10 @@ Specifies the sort direction, either ascending or descending.
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -1562,8 +1529,10 @@ Enum containing all valid roles a user can have in a course.
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -1587,8 +1556,10 @@ The division of the academic year.
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -1634,37 +1605,25 @@ The division of the academic year.
 
 ### Boolean
 
-Built-in Boolean
+The `Boolean` scalar type represents `true` or `false`.
 
 ### Date
 
-An RFC-3339 compliant Full Date Scalar
-
 ### DateTime
-
-A slightly refined version of RFC-3339 compliant DateTime Scalar
 
 ### Int
 
-Built-in Int
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 
 ### LocalTime
 
-24-hour clock time value string in the format `hh:mm:ss` or `hh:mm:ss.sss`.
-
 ### String
 
-Built-in String
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 
 ### Time
 
-An RFC-3339 compliant Full Time Scalar
-
 ### UUID
 
-A universally unique identifier compliant UUID Scalar
-
 ### Url
-
-A Url scalar
 

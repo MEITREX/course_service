@@ -30,6 +30,7 @@ class ChapterServiceTest {
 
     private final ChapterRepository chapterRepository = mock(ChapterRepository.class);
     private final CourseService courseService = mock(CourseService.class);
+    private final MembershipService membershipService = mock(MembershipService.class);
     private final ChapterMapper chapterMapper = new ChapterMapper(new ModelMapper());
     private final ChapterValidator chapterValidator = spy(new ChapterValidator());
 
@@ -39,6 +40,7 @@ class ChapterServiceTest {
             chapterMapper,
             chapterRepository,
             courseService,
+            membershipService,
             chapterValidator,
             topicPublisher);
 

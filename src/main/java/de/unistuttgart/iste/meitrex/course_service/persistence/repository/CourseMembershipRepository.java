@@ -34,4 +34,7 @@ public interface CourseMembershipRepository extends JpaRepository<CourseMembersh
 
     @Query("SELECT c.userId FROM CourseMembership c WHERE c.courseId = :courseId")
     List<UUID> findUserIdsByCourseId(@Param("courseId") UUID courseId);
+
+    @Query("SELECT c.userId FROM CourseMembership c WHERE c.courseId = :courseId AND c.role = 'STUDENT'")
+    List<UUID> findStudentsIdsByCourseId(@Param("courseId") UUID courseId);
 }

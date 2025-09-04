@@ -34,6 +34,7 @@ public class ChapterService {
     private final ChapterMapper chapterMapper;
     private final ChapterRepository chapterRepository;
     private final CourseService courseService;
+    private final MembershipService membershipService;
     private final ChapterValidator chapterValidator;
     private final TopicPublisher topicPublisher;
 
