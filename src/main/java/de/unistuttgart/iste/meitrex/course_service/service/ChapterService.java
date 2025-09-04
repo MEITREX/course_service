@@ -1,5 +1,6 @@
 package de.unistuttgart.iste.meitrex.course_service.service;
 
+import de.unistuttgart.iste.meitrex.common.event.*;
 import de.unistuttgart.iste.meitrex.common.dapr.TopicPublisher;
 import de.unistuttgart.iste.meitrex.common.event.CrudOperation;
 import de.unistuttgart.iste.meitrex.common.util.PaginationUtil;
@@ -181,7 +182,7 @@ public class ChapterService {
 
         OffsetDateTime today = OffsetDateTime.now()
                 .withHour(0).withMinute(0).withSecond(0).withNano(0);
-
+        String link = "";
         // Unlock
         List<ChapterEntity> unlockList = chapterRepository.findChaptersToUnlock(today);
         for (ChapterEntity ch : unlockList) {
