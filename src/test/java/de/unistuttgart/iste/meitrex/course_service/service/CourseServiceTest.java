@@ -2,10 +2,14 @@ package de.unistuttgart.iste.meitrex.course_service.service;
 
 import de.unistuttgart.iste.meitrex.common.dapr.TopicPublisher;
 import de.unistuttgart.iste.meitrex.common.event.CrudOperation;
+import de.unistuttgart.iste.meitrex.common.event.ServerSource;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.ChapterEntity;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseEntity;
+import de.unistuttgart.iste.meitrex.course_service.persistence.mapper.ChapterMapper;
 import de.unistuttgart.iste.meitrex.course_service.persistence.mapper.CourseMapper;
+import de.unistuttgart.iste.meitrex.course_service.persistence.repository.ChapterRepository;
 import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseRepository;
+import de.unistuttgart.iste.meitrex.course_service.persistence.validation.ChapterValidator;
 import de.unistuttgart.iste.meitrex.course_service.persistence.validation.CourseValidator;
 import de.unistuttgart.iste.meitrex.generated.dto.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -315,5 +319,45 @@ class CourseServiceTest {
                 .suggestedStartDate(OffsetDateTime.now())
                 .suggestedEndDate(OffsetDateTime.now())
                 .build();
+    }
+
+    @Test void unlockSendsNotification() {
+        var repo=mock(ChapterRepository.class);
+        var map=mock(ChapterMapper.class);
+        var course=mock(CourseService.class);
+        var ms=mock(MembershipService.class);
+        var val=mock(ChapterValidator.class);
+        var pub=mock(TopicPublisher.class);
+        var s=new ChapterService(map,repo,course,ms,val,pub);
+        UUID cid=UUID.randomUUID(), chid=UUID.randomUUID();
+        var ch=ChapterEntity.builder().id(chid).courseId(cid).title("Intro").build();
+        when(repo.findChaptersToUnlock(any())).thenReturn(List.of(ch));
+        when(repo.findChaptersToLock(any())).thenReturn(List.of());
+        var dto=new Course(); dto.setTitle("CS101"); when(course.getCourseById(cid)).thenReturn(dto);
+        var users=List.of(UUID.randomUUID()); when(ms.getUserIdsOfCourse(cid)).thenReturn(users);
+        s.checkChapters();
+        verify(pub).notificationEvent(eq(cid), eq(users), eq(ServerSource.CHAPTER),
+                eq("/courses/"+cid+"/chapters/"+chid), eq("New Chapter Unlocked!"),
+                eq("CS101's Chapter Intro is unlocked"));
+    }
+
+    @Test void lockSendsNotification() {
+        var repo=mock(ChapterRepository.class);
+        var map=mock(ChapterMapper.class);
+        var course=mock(CourseService.class);
+        var ms=mock(MembershipService.class);
+        var val=mock(ChapterValidator.class);
+        var pub=mock(TopicPublisher.class);
+        var s=new ChapterService(map,repo,course,ms,val,pub);
+        UUID cid=UUID.randomUUID(), chid=UUID.randomUUID();
+        var ch=ChapterEntity.builder().id(chid).courseId(cid).title("Intro").build();
+        when(repo.findChaptersToUnlock(any())).thenReturn(List.of());
+        when(repo.findChaptersToLock(any())).thenReturn(List.of(ch));
+        var dto=new Course(); dto.setTitle("CS101"); when(course.getCourseById(cid)).thenReturn(dto);
+        var users=List.of(UUID.randomUUID()); when(ms.getUserIdsOfCourse(cid)).thenReturn(users);
+        s.checkChapters();
+        verify(pub).notificationEvent(eq(cid), eq(users), eq(ServerSource.CHAPTER),
+                eq("/courses/"+cid+"/chapters/"+chid), eq("An Old Chapter Locked"),
+                eq("CS101's Chapter Intro is locked"));
     }
 }
