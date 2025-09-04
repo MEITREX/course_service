@@ -25,7 +25,6 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static org.springframework.data.jpa.domain.Specification.where;
 
 /**
  * Service that handles chapter related operations.
@@ -190,26 +189,26 @@ public class ChapterService {
                 PaginationUtil.unpagedPaginationInfo(chapters.size()));
     }
 
-    @Scheduled(cron = "${chapter.schedule.cron:0 0 0 * * *}") // 每天 0:00
-    public void checkChapters() {
-
-        OffsetDateTime today = OffsetDateTime.now()
-                .withHour(0).withMinute(0).withSecond(0).withNano(0);
-        String link = "";
-        // Unlock
-        List<ChapterEntity> unlockList = chapterRepository.findChaptersToUnlock(today);
-        for (ChapterEntity ch : unlockList) {
-            String CourseTitle = courseService.getCourseById(ch.getCourseId()).getTitle();
-            List<UUID> userIds = membershipService.getUserIdsOfCourse(ch.getCourseId());
-            topicPublisher.notificationEvent(ch.getCourseId(), userIds, ServerSource.CHAPTER, link, "New Chapter Unlocked!", CourseTitle + "'s Chapter" + ch.getTitle() + "is unlocked");
-        }
-
-        // Lock
-        List<ChapterEntity> lockList = chapterRepository.findChaptersToLock(today);
-        for (ChapterEntity ch : lockList) {
-            String CourseTitle = courseService.getCourseById(ch.getCourseId()).getTitle();
-            List<UUID> userIds = membershipService.getUserIdsOfCourse(ch.getCourseId());
-            topicPublisher.notificationEvent(ch.getCourseId(), userIds, ServerSource.CHAPTER, link, "An Old Chapter Locked", CourseTitle + "'s Chapter" + ch.getTitle() + "is locked");
-        }
-    }
+//    @Scheduled(cron = "${chapter.schedule.cron:0 0 0 * * *}") // 每天 0:00
+//    public void checkChapters() {
+//
+//        OffsetDateTime today = OffsetDateTime.now()
+//                .withHour(0).withMinute(0).withSecond(0).withNano(0);
+//        String link = "";
+//        // Unlock
+//        List<ChapterEntity> unlockList = chapterRepository.findChaptersToUnlock(today);
+//        for (ChapterEntity ch : unlockList) {
+//            String CourseTitle = courseService.getCourseById(ch.getCourseId()).getTitle();
+//            List<UUID> userIds = membershipService.getUserIdsOfCourse(ch.getCourseId());
+//            topicPublisher.notificationEvent(ch.getCourseId(), userIds, ServerSource.CHAPTER, link, "New Chapter Unlocked!", CourseTitle + "'s Chapter" + ch.getTitle() + "is unlocked");
+//        }
+//
+//        // Lock
+//        List<ChapterEntity> lockList = chapterRepository.findChaptersToLock(today);
+//        for (ChapterEntity ch : lockList) {
+//            String CourseTitle = courseService.getCourseById(ch.getCourseId()).getTitle();
+//            List<UUID> userIds = membershipService.getUserIdsOfCourse(ch.getCourseId());
+//            topicPublisher.notificationEvent(ch.getCourseId(), userIds, ServerSource.CHAPTER, link, "An Old Chapter Locked", CourseTitle + "'s Chapter" + ch.getTitle() + "is locked");
+//        }
+//    }
 }

@@ -15,19 +15,10 @@ import java.util.UUID;
  */
 public interface ChapterRepository extends MeitrexRepository<ChapterEntity, UUID>, JpaSpecificationExecutor<ChapterEntity> {
 
-    /* 找到需要 Unlock 的章节（unlocked = false） */
-    @Query("""
-    SELECT c
-    FROM Chapter c
-    WHERE DATE(c.startDate) = DATE(:now)
-    """)
+    @Query("SELECT c FROM Chapter c WHERE DATE(c.startDate) = DATE(:now)")
     List<ChapterEntity> findChaptersToUnlock(@Param("now") OffsetDateTime now);
 
-    @Query("""
-    SELECT c
-    FROM Chapter c
-    WHERE DATE(c.endDate) = DATE(:now)
-    """)
+    @Query("SELECT c FROM Chapter c WHERE DATE(c.endDate) = DATE(:now)")
     List<ChapterEntity> findChaptersToLock(@Param("now") OffsetDateTime now);
 
     List<ChapterEntity> findChapterEntitiesByCourseId(UUID courseId);
