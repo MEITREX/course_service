@@ -1,5 +1,7 @@
 package de.unistuttgart.iste.meitrex.course_service.service;
 
+import de.unistuttgart.iste.meitrex.common.dapr.TopicPublisher;
+import de.unistuttgart.iste.meitrex.common.event.UserCourseMembershipChangedEvent;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.*;
 import de.unistuttgart.iste.meitrex.course_service.persistence.mapper.CourseMapper;
 import de.unistuttgart.iste.meitrex.course_service.persistence.mapper.MembershipMapper;
@@ -26,6 +28,8 @@ public class MembershipService {
     private final MembershipMapper membershipMapper;
 
     private final CourseMapper courseMapper;
+
+    private final TopicPublisher topicPublisher;
 
     /**
      * Returns all memberships of a user
@@ -57,6 +61,13 @@ public class MembershipService {
 
         final CourseMembershipEntity entity = courseMembershipRepository.save(membershipMapper.dtoToEntity(inputDto));
 
+        topicPublisher.notifyUserCourseMembershipChanged(UserCourseMembershipChangedEvent.builder()
+                .courseId(inputDto.getCourseId())
+                .userId(inputDto.getUserId())
+                .previousRole(null)
+                .newRole(entity.getRole())
+                .build());
+
         return membershipMapper.entityToDto(entity);
     }
 
@@ -67,11 +78,20 @@ public class MembershipService {
      * @return updated entity
      */
     public CourseMembership updateMembershipRole(final CourseMembershipInput inputDto) {
-
         //make sure entity exists in database
-        requireMembershipExisting(new CourseMembershipPk(inputDto.getUserId(), inputDto.getCourseId()));
+        final UserRoleInCourse previousRole =
+                requireMembershipExisting(new CourseMembershipPk(inputDto.getUserId(), inputDto.getCourseId()))
+                        .getRole();
 
         final CourseMembershipEntity entity = courseMembershipRepository.save(membershipMapper.dtoToEntity(inputDto));
+
+        topicPublisher.notifyUserCourseMembershipChanged(UserCourseMembershipChangedEvent.builder()
+                .courseId(inputDto.getCourseId())
+                .userId(inputDto.getUserId())
+                .previousRole(previousRole)
+                .newRole(entity.getRole())
+                .build());
+
         return membershipMapper.entityToDto(entity);
     }
 
@@ -84,7 +104,16 @@ public class MembershipService {
         final CourseMembershipPk membershipPk = new CourseMembershipPk(userId, courseId);
 
         final CourseMembershipEntity entity = requireMembershipExisting(membershipPk);
+        final UserRoleInCourse previousRole = entity.getRole();
+
         courseMembershipRepository.deleteById(membershipPk);
+
+        topicPublisher.notifyUserCourseMembershipChanged(UserCourseMembershipChangedEvent.builder()
+                .courseId(courseId)
+                .userId(userId)
+                .previousRole(previousRole)
+                .newRole(null)
+                .build());
 
         return membershipMapper.entityToDto(entity);
     }
@@ -99,7 +128,20 @@ public class MembershipService {
         final List<CourseMembershipEntity> memberships = courseMembershipRepository.findCourseMembershipEntitiesByCourseId(courseId);
 
         if (memberships != null && !memberships.isEmpty()) {
+            final List<UserCourseMembershipChangedEvent> events = memberships.stream()
+                    .map(mem -> UserCourseMembershipChangedEvent.builder()
+                            .courseId(courseId)
+                            .userId(mem.getUserId())
+                            .previousRole(mem.getRole())
+                            .newRole(null)
+                            .build())
+                    .toList();
+
             courseMembershipRepository.deleteAll(memberships);
+
+            for (final UserCourseMembershipChangedEvent event : events) {
+                topicPublisher.notifyUserCourseMembershipChanged(event);
+            }
         }
     }
 

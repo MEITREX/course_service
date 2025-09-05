@@ -61,9 +61,8 @@ class CourseServiceClientTest {
     @BeforeEach
     void setUp() {
         this.course = courseRepository.save(createTestCourse());
-        LoggedInUser loggedInUser = userWithMembershipInCourseWithId(course.getId(), LoggedInUser.UserRoleInCourse.ADMINISTRATOR);
         final WebTestClient webTestClient = MockMvcWebTestClient.bindToApplicationContext(applicationContext)
-                .configureClient().baseUrl("/graphql").defaultHeaders(httpHeaders -> httpHeaders.add("CurrentUser", getJson(loggedInUser))).build();
+                .configureClient().baseUrl("/graphql").build();
 
         graphQlClient = GraphQlClient.builder(new WebTestClientTransport(webTestClient)).build();
     }
@@ -216,65 +215,5 @@ class CourseServiceClientTest {
                 .description("Test Description")
                 .chapters(new ArrayList<>())
                 .build();
-    }
-
-
-    /*
-        Copied from de.unistuttgart.iste.meitrex.common.testutil.HeaderUtils
-     */
-    private static String getJson(final LoggedInUser user) {
-
-        final StringBuilder courseMemberships = new StringBuilder().append("[");
-        final StringBuilder realmRoles = new StringBuilder().append("[");
-
-        for (int i = 0; i < user.getCourseMemberships().size(); i++) {
-            final LoggedInUser.CourseMembership courseMembership = user.getCourseMemberships().get(i);
-
-            courseMemberships.append("{")
-                    .append("\"courseId\": \"").append(courseMembership.getCourseId()).append("\",")
-                    .append("\"role\": \"").append(courseMembership.getRole()).append("\",")
-                    .append("\"published\": ").append(courseMembership.isPublished()).append(",")
-                    .append("\"startDate\": \"").append(courseMembership.getStartDate()).append("\",")
-                    .append("\"endDate\": \"").append(courseMembership.getEndDate()).append("\"")
-                    .append("}");
-
-            if (i < user.getCourseMemberships().size() - 1) {
-                courseMemberships.append(",");
-            }
-        }
-
-        courseMemberships.append("]");
-
-        List<String> roleStrings = LoggedInUser.RealmRole.getRoleStringsFromEnum(user.getRealmRoles()).stream().toList();
-
-        for (int j = 0; j < roleStrings.size(); j++) {
-
-            realmRoles.append("\"")
-                    .append(roleStrings.get(j))
-                    .append("\"");
-
-            if (j < roleStrings.size() - 1) {
-                realmRoles.append(",");
-            }
-        }
-
-        realmRoles.append("]");
-
-        return """
-                {
-                  "id": "%s",
-                  "userName": "%s",
-                  "firstName": "%s",
-                  "lastName": "%s",
-                  "courseMemberships": %s,
-                  "realmRoles": %s
-                }
-                """
-                .formatted(user.getId(),
-                        user.getUserName(),
-                        user.getFirstName(),
-                        user.getLastName(),
-                        courseMemberships.toString(),
-                        realmRoles.toString());
     }
 }
