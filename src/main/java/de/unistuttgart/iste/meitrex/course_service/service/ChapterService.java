@@ -187,7 +187,7 @@ public class ChapterService {
                 PaginationUtil.unpagedPaginationInfo(chapters.size()));
     }
 
-    @Scheduled(cron = "${chapter.schedule.cron:0 0 0 * * *}") // 每天 0:00
+    @Scheduled(cron = "${chapter.schedule.cron:0 0 0 * * *}") // 0:00
     public void checkChapters() {
 
         OffsetDateTime today = OffsetDateTime.now()
