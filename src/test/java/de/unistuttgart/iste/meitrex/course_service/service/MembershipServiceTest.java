@@ -1,5 +1,6 @@
 package de.unistuttgart.iste.meitrex.course_service.service;
 
+import de.unistuttgart.iste.meitrex.common.dapr.TopicPublisher;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseEntity;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseMembershipEntity;
 import de.unistuttgart.iste.meitrex.course_service.persistence.mapper.CourseMapper;
@@ -33,10 +34,14 @@ class MembershipServiceTest {
 
     private final CourseMapper courseMapper = new CourseMapper(modelMapper);
 
-    private final MembershipService membershipService = new MembershipService(courseMembershipRepository,
+    private final TopicPublisher topicPublisher = mock(TopicPublisher.class);
+
+    private final MembershipService membershipService = new MembershipService(
+            courseMembershipRepository,
             courseRepository,
             membershipMapper,
-            courseMapper);
+            courseMapper,
+            topicPublisher);
 
     @Test
     void getAllMembershipsByUserIdsTest() {

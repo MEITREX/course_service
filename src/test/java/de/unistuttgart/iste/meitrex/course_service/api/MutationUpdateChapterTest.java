@@ -124,7 +124,7 @@ class MutationUpdateChapterTest {
                 "admin",
                 "admin",
                 "admin",
-                "Nick",
+                "admin",
                 Collections.emptyList(),
                 Collections.emptySet());
         // save course memberships of admin to repository

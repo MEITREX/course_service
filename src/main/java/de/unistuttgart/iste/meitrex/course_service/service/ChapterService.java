@@ -23,8 +23,6 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static org.springframework.data.jpa.domain.Specification.where;
-
 /**
  * Service that handles chapter related operations.
  */
@@ -165,8 +163,9 @@ public class ChapterService {
         final Sort sort = SortUtil.createSort(sortBy, sortDirection);
         final Pageable pageRequest = PaginationUtil.createPageable(pagination, sort);
 
-        final Specification<ChapterEntity> specification =
-                where(ChapterFilterSpecification.courseIdEquals(courseId)).and(ChapterFilterSpecification.chapterFilter(filter));
+        final Specification<ChapterEntity> specification = Specification.<ChapterEntity>unrestricted()
+                .and(ChapterFilterSpecification.courseIdEquals(courseId))
+                .and(ChapterFilterSpecification.chapterFilter(filter));
 
         if (pageRequest.isPaged()) {
             final Page<ChapterEntity> result = chapterRepository.findAll(specification, pageRequest);
