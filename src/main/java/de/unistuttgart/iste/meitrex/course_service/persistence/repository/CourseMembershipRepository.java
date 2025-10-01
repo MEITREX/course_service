@@ -2,6 +2,7 @@ package de.unistuttgart.iste.meitrex.course_service.persistence.repository;
 
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseMembershipEntity;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseMembershipPk;
+import de.unistuttgart.iste.meitrex.generated.dto.UserRoleInCourse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -34,4 +35,8 @@ public interface CourseMembershipRepository extends JpaRepository<CourseMembersh
 
     @Query("SELECT c.userId FROM CourseMembership c WHERE c.courseId = :courseId")
     List<UUID> findUserIdsByCourseId(@Param("courseId") UUID courseId);
+    @Query("SELECT c.userId FROM CourseMembership c WHERE c.courseId = :courseId AND c.role = :role")
+    List<UUID> findUserIdsByCourseId(@Param("courseId") UUID courseId,
+                                     @Param("role") UserRoleInCourse role);
+
 }

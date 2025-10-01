@@ -2,10 +2,14 @@ package de.unistuttgart.iste.meitrex.course_service.service;
 
 import de.unistuttgart.iste.meitrex.common.dapr.TopicPublisher;
 import de.unistuttgart.iste.meitrex.common.event.CrudOperation;
+import de.unistuttgart.iste.meitrex.common.event.ServerSource;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.ChapterEntity;
 import de.unistuttgart.iste.meitrex.course_service.persistence.entity.CourseEntity;
+import de.unistuttgart.iste.meitrex.course_service.persistence.mapper.ChapterMapper;
 import de.unistuttgart.iste.meitrex.course_service.persistence.mapper.CourseMapper;
+import de.unistuttgart.iste.meitrex.course_service.persistence.repository.ChapterRepository;
 import de.unistuttgart.iste.meitrex.course_service.persistence.repository.CourseRepository;
+import de.unistuttgart.iste.meitrex.course_service.persistence.validation.ChapterValidator;
 import de.unistuttgart.iste.meitrex.course_service.persistence.validation.CourseValidator;
 import de.unistuttgart.iste.meitrex.generated.dto.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -316,4 +320,5 @@ class CourseServiceTest {
                 .suggestedEndDate(OffsetDateTime.now())
                 .build();
     }
+
 }
