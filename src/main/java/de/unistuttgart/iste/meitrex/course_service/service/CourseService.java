@@ -156,6 +156,16 @@ public class CourseService {
     }
 
     /**
+     * Returns the number of course memberships for the given course.
+     *
+     * @param courseId course to get the number of memberships for.
+     * @return A integer value, the number of course memberships.
+     */
+    public int getNumberOfCourseMemberships(final UUID courseId) {
+        return membershipService.getMembershipsOfCourse(courseId).size();
+    }
+
+    /**
      * Returns a map of courses by their course memberships.
      *
      * @param courseMemberships The course memberships to get the courses for.

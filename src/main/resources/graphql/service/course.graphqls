@@ -40,6 +40,10 @@ type Course {
     """
     yearDivision: YearDivision
     """
+    The number of users that are members of the course.
+    """
+    numberOfCourseMemberships: Int!
+    """
     Chapters of the course. Can be filtered and sorted.
     🔒 User needs to be enrolled in the course to access this field.
     """
