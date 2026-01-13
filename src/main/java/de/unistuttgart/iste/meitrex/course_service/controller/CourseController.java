@@ -79,4 +79,9 @@ public class CourseController {
         return courseService.deleteCourse(id);
     }
 
+    @SchemaMapping(typeName = "Course", field = "numberOfCourseMemberships")
+    public int numberOfCourseMemberships (final Course course) {
+        return courseService.getNumberOfCourseMemberships(course.getId());
+    }
+
 }
